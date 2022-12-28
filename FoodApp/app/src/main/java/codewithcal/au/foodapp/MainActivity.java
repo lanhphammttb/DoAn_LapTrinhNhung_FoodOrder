@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
 
         apiInterface = RetrofitClient.getRetrofitInstance().create(ApiInterface.class);
 
-
         allMenuRecyclerView = findViewById(R.id.all_menu_recycler);
         tvUserInfo = findViewById(R.id.tv_user_info);
         Bundle bundleReceive = getIntent().getExtras();
@@ -68,9 +67,8 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<List<Food>>() {
             @Override
             public void onResponse(Call<List<Food>> call, Response<List<Food>> response) {
-
                 allmenuList = response.body();
-                allMenuAdapter = new AllMenuAdapter(allmenuList);
+                allMenuAdapter = new AllMenuAdapter(MainActivity.this,allmenuList);
                 allMenuRecyclerView.setAdapter(allMenuAdapter);
                 allMenuAdapter.notifyDataSetChanged();
             }

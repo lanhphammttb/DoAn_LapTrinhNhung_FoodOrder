@@ -10,10 +10,10 @@ public class Food {
     private String name;
     @SerializedName("price")
     @Expose
-    private int price;
+    private String price;
     @SerializedName("type")
     @Expose
-    private String note;
+    private String type;
 
     public String getName() {
         return name;
@@ -23,20 +23,20 @@ public class Food {
         this.name = name;
     }
 
-    public int getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
-    public String getNote() {
-        return note;
+    public String getType() {
+        return type;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setType(String type) {
+        this.type = type;
     }
 
 }

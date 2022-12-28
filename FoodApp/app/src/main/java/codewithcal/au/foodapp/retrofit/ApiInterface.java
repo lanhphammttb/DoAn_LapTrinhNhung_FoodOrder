@@ -3,10 +3,13 @@ package codewithcal.au.foodapp.retrofit;
 
 import java.util.List;
 
+import codewithcal.au.foodapp.model.Bill;
 import codewithcal.au.foodapp.model.Food;
 import codewithcal.au.foodapp.model.User;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface ApiInterface {
@@ -18,5 +21,6 @@ public interface ApiInterface {
     @GET("account")
     Call<List<User>> getUser(@Query("fbclid") String fbclid);
 
-
+    @POST("bill")
+    Call<Bill> createPost(@Body Bill bill);
 }
