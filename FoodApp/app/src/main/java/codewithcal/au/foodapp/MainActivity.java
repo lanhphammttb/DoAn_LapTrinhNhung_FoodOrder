@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void callApiGetUsers() {
-        Call<List<Food>> call = apiInterface.getAllData("IwAR39n1rANXBg_wi7kur0O2faFkCOasJ5sXBmLl0wI_D8fMUzKZxqqirOtWo");
+        Call<List<Food>> call = apiInterface.getAllData();
         call.enqueue(new Callback<List<Food>>() {
             @Override
             public void onResponse(Call<List<Food>> call, Response<List<Food>> response) {

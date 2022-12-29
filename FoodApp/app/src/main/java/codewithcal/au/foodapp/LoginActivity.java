@@ -92,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
     private void getListUsers(){
-        Call<List<User>> call = apiInterface.getUser("IwAR39n1rANXBg_wi7kur0O2faFkCOasJ5sXBmLl0wI_D8fMUzKZxqqirOtWo");
+        Call<List<User>> call = apiInterface.getUser();
         call.enqueue(new Callback<List<User>>() {
             @Override
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
