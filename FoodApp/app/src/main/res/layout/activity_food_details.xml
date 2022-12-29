@@ -89,7 +89,7 @@
         app:layout_constraintTop_toBottomOf="@+id/price" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_add_to_cart"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -106,7 +106,7 @@
 
     <TextView
         android:id="@+id/type"
-        android:layout_width="90dp"
+        android:layout_width="150dp"
         android:layout_height="42dp"
         android:layout_marginTop="24dp"
         android:layout_marginRight="10dp"

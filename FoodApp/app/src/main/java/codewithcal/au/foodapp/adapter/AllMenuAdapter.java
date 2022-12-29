@@ -70,8 +70,8 @@ public class AllMenuAdapter extends RecyclerView.Adapter<AllMenuAdapter.AllMenuV
         public AllMenuViewHolder(@NonNull View itemView) {
             super(itemView);
             nameFood = itemView.findViewById(R.id.name_food);
-            typeFood= itemView.findViewById(R.id.type_food);
             priceFood = itemView.findViewById(R.id.price_food);
+            typeFood= itemView.findViewById(R.id.type_food);
         }
     }
 
