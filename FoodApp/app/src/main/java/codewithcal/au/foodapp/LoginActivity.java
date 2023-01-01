@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         if (isHasUser){
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            Intent intent = new Intent(LoginActivity.this, PageActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("obj_account", mUser);
             intent.putExtras(bundle);

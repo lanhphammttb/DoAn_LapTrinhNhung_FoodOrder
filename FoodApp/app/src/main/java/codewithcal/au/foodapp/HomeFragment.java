@@ -1,21 +1,20 @@
 package codewithcal.au.foodapp;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
+import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TableLayout;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.material.tabs.TabLayout;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
-
+public class HomeFragment extends Fragment {
     ApiInterface apiInterface;
 
     RecyclerView allMenuRecyclerView;
@@ -38,58 +36,48 @@ public class MainActivity extends AppCompatActivity {
     AllMenuAdapter allMenuAdapter;
 
     List<Food> allmenuList;
-
-    TextView tvUserInfo;
-    TextView tvUserInfoId;
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+    }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_home, container, false);
+    }
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
         apiInterface = RetrofitClient.getRetrofitInstance().create(ApiInterface.class);
 
-        allMenuRecyclerView = findViewById(R.id.all_menu_recycler);
-        tvUserInfo = findViewById(R.id.tv_user_info);
-        tvUserInfoId = findViewById(R.id.tv_user_info_id);
-        Bundle bundleReceive = getIntent().getExtras();
-        if (bundleReceive != null){
-            User user = (User) bundleReceive.get("obj_account");
-            if(user != null){
-                tvUserInfo.setText(user.toString());
-                String ids = String.valueOf(user.getId());
-                tvUserInfoId.setText(ids);
-                Intent i = new Intent(MainActivity.this, PayActivity.class);
-                i.putExtra("id", ids);
-                startActivity(i);
-            }
-        }
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        allMenuRecyclerView = view.findViewById(R.id.all_menu_recycler);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         allMenuRecyclerView.setLayoutManager(layoutManager);
 
-        DividerItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         allMenuRecyclerView.addItemDecoration(itemDecoration);
 
         allmenuList= new ArrayList<>();
-
         callApiGetUsers();
-
+        dataInitalize();
     }
 
+    private void dataInitalize() {
+    }
     private void callApiGetUsers() {
         Call<List<Food>> call = apiInterface.getAllData();
         call.enqueue(new Callback<List<Food>>() {
             @Override
             public void onResponse(Call<List<Food>> call, Response<List<Food>> response) {
                 allmenuList = response.body();
-                allMenuAdapter = new AllMenuAdapter(MainActivity.this,allmenuList);
+                allMenuAdapter = new AllMenuAdapter(getContext(),allmenuList);
                 allMenuRecyclerView.setAdapter(allMenuAdapter);
                 allMenuAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onFailure(Call<List<Food>> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Server is not responding.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Server is not responding.", Toast.LENGTH_SHORT).show();
             }
         });
     }
