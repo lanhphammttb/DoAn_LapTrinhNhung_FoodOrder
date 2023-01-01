@@ -5,6 +5,7 @@ import java.util.List;
 
 import codewithcal.au.foodapp.model.Account;
 import codewithcal.au.foodapp.model.Bill;
+import codewithcal.au.foodapp.model.DetailBill;
 import codewithcal.au.foodapp.model.Food;
 import codewithcal.au.foodapp.model.User;
 import retrofit2.Call;
@@ -24,6 +25,9 @@ public interface ApiInterface {
     @GET("account")
     Call<List<User>> getUser();
 
+    @GET("food")
+    Call<List<DetailBill>> getFood();
+
     @POST("account")
     Call<Account> createAccount(@Body Account account);
 
@@ -31,5 +35,5 @@ public interface ApiInterface {
     Call<Account> updateAccount(@Body Account account);
 
     @POST("bill")
-    Call<Bill> createPost(@Body Bill bill);
+    Call<Bill> createBill(@Body Bill bill);
 }

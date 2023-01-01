@@ -1,58 +1,46 @@
 package codewithcal.au.foodapp;
 
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 
 import codewithcal.au.foodapp.adapter.CartAdapter;
+import codewithcal.au.foodapp.adapter.DetailBillAdapter;
+import codewithcal.au.foodapp.model.DetailBill;
 import codewithcal.au.foodapp.model.Food;
 import codewithcal.au.foodapp.sqlite.DatabaseHandler;
 
 public class CartActivity extends AppCompatActivity {
-    private ArrayList<Food> arrayList;
-    private TextView itemName, itemPrice, itemType;
+    private ArrayList<DetailBill> arrayList;
     private RecyclerView rcvCart;
-    private CartAdapter cartAdapter;
-    private ActivityResultLauncher<Intent> launcherforAdd;
+    private DetailBillAdapter detailBillAdapter;
     private DatabaseHandler db;
     private int idDelete;
-    //String name, price, type;
+    private FloatingActionButton btnPay;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+
         //thay doi title actionbar
         getSupportActionBar().setTitle(getString(R.string.listcart));
         db = new DatabaseHandler(this);
-        //initResultLauncher();
-        getAllContacts();
-        //Intent intent = getIntent();
-        /*name = intent.getStringExtra("name");
-        price = intent.getStringExtra("price");
-        type = intent.getStringExtra("type");
-
-        itemName = findViewById(R.id.name_cart);
-        itemPrice= findViewById(R.id.price_cart);
-        itemType = findViewById(R.id.type_cart);
-
-        itemName.setText(name);
-        itemPrice.setText("$" + price);
-        itemType.setText("Loại: " + type);*/
-        cartAdapter = new CartAdapter(this, arrayList, new CartAdapter.ClickListeners() {
+        getAllBills();
+        detailBillAdapter = new DetailBillAdapter(this, arrayList, new DetailBillAdapter.ClickListeners() {
             @Override
             public void onItemClick(int position, View v) {
 
@@ -68,10 +56,10 @@ public class CartActivity extends AppCompatActivity {
                 idDelete = arrayList.get(position).getId();
                 alertDialog.setNegativeButton("Xóa", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Food x = arrayList.get(position);
-                        db.deleteContact(idDelete);
+                        DetailBill x = arrayList.get(position);
+                        db.deleteDetailBill(idDelete);
                         arrayList.remove(x);
-                        cartAdapter.notifyDataSetChanged();
+                        detailBillAdapter.notifyDataSetChanged();
                     } });
                 alertDialog.setPositiveButton("Thoát", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -81,31 +69,26 @@ public class CartActivity extends AppCompatActivity {
             }
         });
         rcvCart = findViewById(R.id.all_bill_recycler);
-        rcvCart.setAdapter(cartAdapter);
+        rcvCart.setAdapter(detailBillAdapter);
         rcvCart.addItemDecoration(new DividerItemDecoration(rcvCart.getContext(), DividerItemDecoration.VERTICAL));
         rcvCart.setLayoutManager(new LinearLayoutManager(this));
+        btnPay = findViewById(R.id.btn_pay);
+        btnPay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { onClickPay();}
+        });
     }
-    private void getAllContacts() {
+    private void getAllBills() {
         try {
             arrayList = new ArrayList<>();
-            arrayList = db.getAllFoods();
+            arrayList = db.getAllDetailBills();
         } catch (Exception ex) {
-            Log.e("getAllFood", ex.getMessage());
+            Log.e("getAllDetailBills", ex.getMessage());
         }
     }
-    private void initResultLauncher() {
-        try {
-            launcherforAdd = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-                if (result != null && result.getResultCode() == RESULT_OK) {
-                    //lay ve contact tai day va cap nhat len giao dien
-                    Food f = (Food) result.getData().getSerializableExtra("food");
-                    //cap nhat tren giao
-                    arrayList.add(f);
-                    cartAdapter.notifyDataSetChanged();
-                }
-            });
-        } catch (Exception ex) {
-            Log.e("initResultLauncher", ex.getMessage());
-        }
+
+    private void onClickPay(){
+        Intent it = new Intent(CartActivity.this, PayActivity.class);
+        startActivity(it);
     }
 }

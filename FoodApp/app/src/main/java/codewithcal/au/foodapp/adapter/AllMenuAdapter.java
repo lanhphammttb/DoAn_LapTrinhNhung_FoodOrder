@@ -37,7 +37,8 @@ public class AllMenuAdapter extends RecyclerView.Adapter<AllMenuAdapter.AllMenuV
     @SuppressLint("RecyclerView")
     @Override
     public void onBindViewHolder(@NonNull AllMenuViewHolder holder, int position) {
-
+        String ids = String.valueOf(allmenuList.get(position).getId());
+        holder.idFood.setText(ids);
         holder.nameFood.setText(allmenuList.get(position).getName());
         holder.priceFood.setText("$"+allmenuList.get(position).getPrice());
         holder.typeFood.setText(allmenuList.get(position).getType());
@@ -46,6 +47,8 @@ public class AllMenuAdapter extends RecyclerView.Adapter<AllMenuAdapter.AllMenuV
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, FoodDetails.class);
+                String ids = String.valueOf(allmenuList.get(position).getId());
+                i.putExtra("id", ids);
                 i.putExtra("name", allmenuList.get(position).getName());
                 i.putExtra("price", allmenuList.get(position).getPrice());
                 i.putExtra("type", allmenuList.get(position).getType());
@@ -65,10 +68,11 @@ public class AllMenuAdapter extends RecyclerView.Adapter<AllMenuAdapter.AllMenuV
 
     public static class AllMenuViewHolder extends RecyclerView.ViewHolder{
 
-        private final TextView nameFood, typeFood, priceFood;
+        private final TextView idFood, nameFood, typeFood, priceFood;
 
         public AllMenuViewHolder(@NonNull View itemView) {
             super(itemView);
+            idFood = itemView.findViewById(R.id.id_food);
             nameFood = itemView.findViewById(R.id.name_food);
             priceFood = itemView.findViewById(R.id.price_food);
             typeFood= itemView.findViewById(R.id.type_food);

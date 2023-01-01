@@ -4,8 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Food {
-
-    private int id;
     @SerializedName("name")
     @Expose
     private String name;
@@ -15,7 +13,9 @@ public class Food {
     @SerializedName("type")
     @Expose
     private String type;
-
+    @SerializedName("id")
+    @Expose
+    private int id;
     public Food() {
     }
 
@@ -26,11 +26,6 @@ public class Food {
         this.type = type;
     }
 
-    public Food(String name, String price, String type) {
-        this.name = name;
-        this.price = price;
-        this.type = type;
-    }
 
     public int getId() {
         return id;

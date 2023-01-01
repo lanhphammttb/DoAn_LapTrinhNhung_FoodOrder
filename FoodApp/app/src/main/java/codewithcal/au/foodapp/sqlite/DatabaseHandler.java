@@ -7,26 +7,23 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
+import codewithcal.au.foodapp.model.DetailBill;
 import codewithcal.au.foodapp.model.Food;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // Database Name
     private static final String DATABASE_NAME = "foodsManager";
 
-    // Contacts table name
-    private static final String TABLE_FOODS = "foods";
-
+    private static final String TABLE_DETAIL_BILLS = "detailfoods";
     // Contacts Table Columns names
     private static final String KEY_ID = "id";
     private static final String KEY_NAME = "name";
-    private static final String KEY_PRICE = "price";
-    private static final String KEY_TYPE = "type";
-
+    private static final String KEY_QUANTITY = "quantity";
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -34,20 +31,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_FOODS_TABLE = "CREATE TABLE " + TABLE_FOODS + "("
+        String CREATE_DETAIL_BILL_TABLE = "CREATE TABLE " + TABLE_DETAIL_BILLS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
-                + KEY_PRICE + " TEXT," + KEY_TYPE + " TEXT" + ")";
-        //khoi tao du lieu
-        //thuc thi các câu lẹnh insert....
-        db.execSQL(CREATE_FOODS_TABLE);
+                + KEY_QUANTITY + " TEXT" + ")";
+        db.execSQL(CREATE_DETAIL_BILL_TABLE);
     }
 
     // Upgrading database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_FOODS);
-
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_DETAIL_BILLS);
         // Create tables again
         onCreate(db);
     }
@@ -56,53 +50,45 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * All CRUD(Create, Read, Update, Delete) Operations
      */
 
-    // Adding new contact
-   public long addFood(Food food) throws Exception {
+    public void addDetailBill(DetailBill detailBill) throws Exception {
         SQLiteDatabase db = null;
-        long id;
         try {
             //mo ket noi
             db = this.getWritableDatabase();
 
             ContentValues values = new ContentValues();
-            values.put(KEY_NAME, food.getName()); // Contact Name
-            values.put(KEY_PRICE, food.getPrice()); // Contact Phone
-            values.put(KEY_TYPE, food.getType()); // Contact Phone
+            values.put(KEY_ID, detailBill.getId());
+            values.put(KEY_NAME, detailBill.getName());
+            values.put(KEY_QUANTITY, detailBill.getQuantity());
 
-            // Inserting Row, tra ve id tu tang
-            id = db.insert(TABLE_FOODS, "", values);
+            long id = db.insert(TABLE_DETAIL_BILLS, "", values);
 
         } catch (Exception ex) {
             throw new Exception(ex.getMessage());
         } finally {
             db.close(); // Closing database connection
-        }
-        return id;
+        };
     }
 
-    // Getting single contact
-    Food getFood(int id) {
+    DetailBill getDetailBill(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_FOODS, new String[]{KEY_ID,
-                        KEY_NAME, KEY_PRICE, KEY_TYPE}, KEY_ID + "=?",
-                new String[]{String.valueOf(id)}, null, null, null, null);
+        Cursor cursor = db.query(TABLE_DETAIL_BILLS, new String[]{KEY_ID,
+                        KEY_NAME, KEY_QUANTITY}, KEY_ID + "=?",
+                new String[]{String.valueOf(id)}, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
-        Food food = new Food(Integer.parseInt(cursor.getString(0)),
+        DetailBill detailBill = new DetailBill(cursor.getInt(0),
                 cursor.getString(1),
-                cursor.getString(2),
-                cursor.getString(3));
+                cursor.getInt(2));
         // return contact
-        return food;
+        return detailBill;
     }
-
-    // Getting All Contacts
-    public ArrayList<Food> getAllFoods() {
-        ArrayList<Food> foodList = new ArrayList<Food>();
+    public ArrayList<DetailBill> getAllDetailBills() {
+        ArrayList<DetailBill> detailBillList = new ArrayList<DetailBill>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_FOODS;
+        String selectQuery = "SELECT  * FROM " + TABLE_DETAIL_BILLS;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -111,47 +97,40 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                Food food = new Food();
-                food.setId(Integer.parseInt(cursor.getString(0)));
-                food.setName(cursor.getString(1));
-                food.setPrice(cursor.getString(2));
-                food.setType(cursor.getString(3));
+                DetailBill detailBill = new DetailBill();
+                detailBill.setId(cursor.getInt(0));
+                detailBill.setName(cursor.getString(1));
+                detailBill.setQuantity(cursor.getInt(2));
                 // Adding contact to list
-                foodList.add(food);
+                detailBillList.add(detailBill);
             } while (cursor.moveToNext());
         }
 
         // return food list
-        return foodList;
+        return detailBillList;
     }
-
     // Updating single contact
-    public int updateContact(Food food) {
+    public int updateDetailFood(DetailBill detailBill) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, food.getName());
-        values.put(KEY_PRICE, food.getName());
-        values.put(KEY_TYPE, food.getName());
+        values.put(KEY_NAME, detailBill.getName());
+        values.put(KEY_QUANTITY, detailBill.getQuantity());
 
         // updating row
-        return db.update(TABLE_FOODS, values, KEY_ID + " = ?",
-                new String[]{String.valueOf(food.getId())});
+        return db.update(TABLE_DETAIL_BILLS, values, KEY_ID + " = ?",
+                new String[]{String.valueOf(detailBill.getId())});
     }
 
-    // Deleting single contact
-    public void deleteContact(int id) {
+    public void deleteDetailBill(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_FOODS, KEY_ID + " = ?",
+        db.delete(TABLE_DETAIL_BILLS, KEY_ID + " = ?",
                 new String[]{String.valueOf(id)});
-        //DELETE FROM Contact  WHERE id  = 123;
-//        db.execSQL("DELETE FROM Contact  WHERE id  = "+id);
         db.close();
     }
-
     // Getting contacts Count
     public int getContactsCount() {
-        String countQuery = "SELECT  * FROM " + TABLE_FOODS;
+        String countQuery = "SELECT  * FROM " + TABLE_DETAIL_BILLS;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
         cursor.close();

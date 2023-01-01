@@ -14,6 +14,15 @@ public class Bill {
     @Expose
     private int quantity;
 
+    public Bill() {
+    }
+
+    public Bill(int accountId, int foodId, int quantity) {
+        this.accountId = accountId;
+        this.foodId = foodId;
+        this.quantity = quantity;
+    }
+
     public int getAccountId() {
         return accountId;
     }

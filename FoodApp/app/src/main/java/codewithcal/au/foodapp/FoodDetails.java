@@ -9,12 +9,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
+import codewithcal.au.foodapp.model.DetailBill;
 import codewithcal.au.foodapp.model.Food;
 import codewithcal.au.foodapp.sqlite.DatabaseHandler;
 
 public class FoodDetails extends AppCompatActivity {
-    TextView itemName, itemPrice, itemType;
-    String name, price, type;
+    TextView itemId, itemName, itemPrice, itemType;
+    String id, name, price, type;
     Button btnAddToCart;
     private DatabaseHandler db;
     @Override
@@ -25,14 +26,17 @@ public class FoodDetails extends AppCompatActivity {
         btnAddToCart = findViewById(R.id.btn_add_to_cart);
         Intent intent = getIntent();
 
+        id = intent.getStringExtra("id");
         name = intent.getStringExtra("name");
         price = intent.getStringExtra("price");
         type = intent.getStringExtra("type");
 
+        itemId = findViewById(R.id.id);
         itemName = findViewById(R.id.name);
         itemPrice= findViewById(R.id.price);
         itemType = findViewById(R.id.type);
 
+        itemId.setText(id);
         itemName.setText(name);
         itemPrice.setText("$" + price);
         itemType.setText("Loại: " + type);
@@ -45,22 +49,17 @@ public class FoodDetails extends AppCompatActivity {
     }
 
     private void ClickAdd() {
+        String idt = itemId.getText().toString();
+        int id = Integer.parseInt(idt);
         String name = itemName.getText().toString();
-        String price = itemPrice.getText().toString();
-        String type = itemType.getText().toString();
         try {
             //Lưu vào sqlite
-            Food f = new Food(name, price, type);
-            long newid = db.addFood(f);
-            f.setId((int) newid);
+            DetailBill f = new DetailBill(id, name, 1);
+            db.addDetailBill(f);
             Intent i = new Intent(FoodDetails.this, CartActivity.class);
-            i.putExtra("id",f.getId());
-            i.putExtra("name",f.getName());
-            i.putExtra("price",f.getPrice());
-            i.putExtra("type",f.getType());
             this.startActivity(i);
         } catch (Exception ex) {
-            Log.e("Them food to cart", ex.getMessage());
+            Log.e("Add food to cart", ex.getMessage());
         }
     }
 }

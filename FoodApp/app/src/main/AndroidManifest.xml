@@ -30,9 +30,10 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".FoodDetails"></activity>
-        <activity android:name=".CartActivity"></activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".FoodDetails" />
+        <activity android:name=".CartActivity" />
+        <activity android:name=".PayActivity" />
     </application>
 
 </manifest>
