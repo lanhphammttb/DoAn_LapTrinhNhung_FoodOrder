@@ -63,7 +63,8 @@ public class AllMenuAdapter extends RecyclerView.Adapter<AllMenuAdapter.AllMenuV
         if(allmenuList != null){
             return allmenuList.size();
         }
-        return 0;
+        else
+            return 0;
     }
 
     public static class AllMenuViewHolder extends RecyclerView.ViewHolder{

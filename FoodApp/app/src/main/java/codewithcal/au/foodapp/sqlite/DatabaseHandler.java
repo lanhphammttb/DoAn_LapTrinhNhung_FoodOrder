@@ -14,7 +14,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     // Database Name
     private static final String DATABASE_NAME = "foodsManager";
@@ -129,14 +129,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
     // Getting contacts Count
-    public int getContactsCount() {
+    public int getDetailBillCount() {
         String countQuery = "SELECT  * FROM " + TABLE_DETAIL_BILLS;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
+        int count = cursor.getCount();
         cursor.close();
 
         // return count
-        return cursor.getCount();
+        return count;
     }
 
 }

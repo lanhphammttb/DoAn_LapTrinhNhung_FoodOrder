@@ -12,25 +12,27 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import codewithcal.au.foodapp.R;
+import codewithcal.au.foodapp.databinding.FragmentItemListDialogListDialogItemBinding;
 import codewithcal.au.foodapp.model.DetailBill;
 
 
-public class DetailBillAdapter extends RecyclerView.Adapter<DetailBillAdapter.MyViewHolder> {
+public class BottomDetailBillAdapter extends RecyclerView.Adapter<BottomDetailBillAdapter.MyViewHolder> {
     private ArrayList<DetailBill> arrayList;
     private Context context;
     private ClickListeners clickListeners;
 
-    public DetailBillAdapter(Context context, ArrayList<DetailBill> arrayList, ClickListeners clickListeners) {
+    public BottomDetailBillAdapter(Context context, ArrayList<DetailBill> arrayList, ClickListeners clickListeners) {
         this.arrayList = arrayList;
         this.context = context;
         this.clickListeners = clickListeners;
     }
 
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bill_recycler_items,parent,false);
-        return new MyViewHolder(view);
+        return new MyViewHolder(FragmentItemListDialogListDialogItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+
     }
 
     @Override
@@ -52,11 +54,11 @@ public class DetailBillAdapter extends RecyclerView.Adapter<DetailBillAdapter.My
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         TextView id, name, quantity;
-        public MyViewHolder(@NonNull View itemView) {
-            super(itemView);
-            id = itemView.findViewById(R.id.id_cart);
-            name = itemView.findViewById(R.id.name_cart);
-            quantity = itemView.findViewById(R.id.quantity_cart);
+        public MyViewHolder(FragmentItemListDialogListDialogItemBinding binding) {
+            super(binding.getRoot());
+            id = binding.bottomIdCart;
+            name = binding.bottomNameCart;
+            quantity = binding.bottomQuantityCart;
 
             //dang ky su kien click cho view: cach 2.
             itemView.setOnClickListener(this);

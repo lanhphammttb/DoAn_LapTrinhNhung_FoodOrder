@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -45,7 +46,7 @@ public class CartFragment extends Fragment {
     }
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //thay doi title actionbar
+
         db = new DatabaseHandler(getContext());
         getAllBills();
         detailBillAdapter = new DetailBillAdapter(getContext(), arrayList, new DetailBillAdapter.ClickListeners() {

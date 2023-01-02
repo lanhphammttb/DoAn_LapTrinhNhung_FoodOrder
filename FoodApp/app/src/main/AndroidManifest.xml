@@ -15,7 +15,6 @@
         android:theme="@style/Theme.FoodApp"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
         <activity
             android:name=".LoginActivity"
             android:exported="true"
@@ -31,11 +30,11 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".MainActivity" />
         <activity android:name=".FoodDetails" />
-        <activity android:name=".CartActivity" />
         <activity android:name=".PayActivity" />
-        <activity android:name=".PageActivity"/>
+        <activity android:name=".PageActivity" />
+        <activity android:name=".FinishActivity" />
+        <activity android:name=".CartActivity" />
     </application>
 
 </manifest>

@@ -5,12 +5,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 import codewithcal.au.foodapp.model.DetailBill;
-import codewithcal.au.foodapp.model.Food;
 import codewithcal.au.foodapp.sqlite.DatabaseHandler;
 
 public class FoodDetails extends AppCompatActivity {
@@ -18,6 +18,7 @@ public class FoodDetails extends AppCompatActivity {
     String id, name, price, type;
     Button btnAddToCart;
     private DatabaseHandler db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,10 +57,16 @@ public class FoodDetails extends AppCompatActivity {
             //Lưu vào sqlite
             DetailBill f = new DetailBill(id, name, 1);
             db.addDetailBill(f);
-            Intent i = new Intent(FoodDetails.this, CartActivity.class);
-            this.startActivity(i);
+            //Intent i = new Intent(FoodDetails.this, CartActivity.class);
+            //this.startActivity(i);
+
+            //BottomSheetDialogCart bottomSheet = new BottomSheetDialogCart();
+            //bottomSheet.show(getSupportFragmentManager(), "bottomSheetDialogCart");
+            ItemListDialogFragment item = new ItemListDialogFragment();
+            item.show(getSupportFragmentManager(), "itemListDialogFragment");
         } catch (Exception ex) {
             Log.e("Add food to cart", ex.getMessage());
         }
     }
+
 }
