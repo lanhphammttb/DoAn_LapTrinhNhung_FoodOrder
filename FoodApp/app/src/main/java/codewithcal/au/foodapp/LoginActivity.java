@@ -35,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText edEmail;
     private EditText edPassword;
     private Button btnLogin;
+    private Button btnRegister;
     ApiInterface apiInterface;
     private List<User> mListUser;
     private User mUser;
@@ -52,9 +53,18 @@ public class LoginActivity extends AppCompatActivity {
         edEmail = findViewById(R.id.ed_email);
         edPassword = findViewById(R.id.ed_password);
         btnLogin = findViewById(R.id.btn_login);
+        btnRegister = findViewById(R.id.btn_register);
 
         mListUser = new ArrayList<>();
         getListUsers();
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override

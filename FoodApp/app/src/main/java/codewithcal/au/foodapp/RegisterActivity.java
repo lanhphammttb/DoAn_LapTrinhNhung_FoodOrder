@@ -1,11 +1,13 @@
 package codewithcal.au.foodapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText edEmail;
     private EditText edPassword;
     private Button btnRegister;
+    private ImageView btnBack;
     ApiInterface apiInterface;
 
     private List<User> mListUser;
@@ -39,8 +42,21 @@ public class RegisterActivity extends AppCompatActivity {
 
         apiInterface = RetrofitClient.getRetrofitInstance().create(ApiInterface.class);
 
+        edUsername = findViewById(R.id.ed_username);
+        edEmail = findViewById(R.id.ed_email);
+        edPassword = findViewById(R.id.ed_password);
+        btnRegister = findViewById(R.id.button_register);
+        btnBack = findViewById(R.id.icon_back);
+
         mListUser = new ArrayList<>();
         getListUsers();
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickBack();
+            }
+        });
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,5 +107,13 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(RegisterActivity.this, "Server is not responding.", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void clickBack(){
+        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("obj_account", mUser);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }

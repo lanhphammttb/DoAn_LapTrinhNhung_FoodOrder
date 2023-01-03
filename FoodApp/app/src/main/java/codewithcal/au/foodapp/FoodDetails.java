@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,6 +18,7 @@ public class FoodDetails extends AppCompatActivity {
     TextView itemId, itemName, itemPrice, itemType;
     String id, name, price, type;
     Button btnAddToCart;
+    ImageView btnBack;
     private DatabaseHandler db;
 
     @Override
@@ -36,11 +38,21 @@ public class FoodDetails extends AppCompatActivity {
         itemName = findViewById(R.id.name);
         itemPrice= findViewById(R.id.price);
         itemType = findViewById(R.id.type);
+        btnBack = findViewById(R.id.icon_back);
 
         itemId.setText(id);
         itemName.setText(name);
         itemPrice.setText("$" + price);
         itemType.setText("Loại: " + type);
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FoodDetails.this, PageActivity.class);
+                startActivity(intent);
+            }
+        });
+
         btnAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
