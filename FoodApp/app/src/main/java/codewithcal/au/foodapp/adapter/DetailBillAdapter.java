@@ -1,6 +1,7 @@
 package codewithcal.au.foodapp.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import codewithcal.au.foodapp.PageActivity;
 import codewithcal.au.foodapp.R;
+import codewithcal.au.foodapp.databinding.FragmentCartBinding;
 import codewithcal.au.foodapp.model.DetailBill;
+import codewithcal.au.foodapp.model.User;
 
 
 public class DetailBillAdapter extends RecyclerView.Adapter<DetailBillAdapter.MyViewHolder> {
     private ArrayList<DetailBill> arrayList;
     private Context context;
     private ClickListeners clickListeners;
-
     public DetailBillAdapter(Context context, ArrayList<DetailBill> arrayList, ClickListeners clickListeners) {
         this.arrayList = arrayList;
         this.context = context;

@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -23,8 +24,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 
 import codewithcal.au.foodapp.adapter.DetailBillAdapter;
+import codewithcal.au.foodapp.databinding.FragmentCartBinding;
 import codewithcal.au.foodapp.model.DetailBill;
+import codewithcal.au.foodapp.model.User;
 import codewithcal.au.foodapp.sqlite.DatabaseHandler;
+import kotlin.jvm.internal.PropertyReference0Impl;
 
 public class CartFragment extends Fragment {
     private ArrayList<DetailBill> arrayList;
@@ -33,6 +37,16 @@ public class CartFragment extends Fragment {
     private DatabaseHandler db;
     private int idDelete;
     private FloatingActionButton btnPay;
+    private String id;
+
+    public static CartFragment getInstance(String id){
+        CartFragment cartFragment = new CartFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("user_id", id);
+        cartFragment.setArguments(bundle);
+        return cartFragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,12 +55,10 @@ public class CartFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_cart, container, false);
     }
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         db = new DatabaseHandler(getContext());
         getAllBills();
         detailBillAdapter = new DetailBillAdapter(getContext(), arrayList, new DetailBillAdapter.ClickListeners() {
@@ -82,11 +94,16 @@ public class CartFragment extends Fragment {
         rcvCart.addItemDecoration(new DividerItemDecoration(rcvCart.getContext(), DividerItemDecoration.VERTICAL));
         rcvCart.setLayoutManager(new LinearLayoutManager(getContext()));
         btnPay = view.findViewById(R.id.btn_pay);
+
+        if (getArguments() != null){
+            this.id = getArguments().getString("user_id");
+        }
         btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { onClickPay();}
         });
     }
+
     private void getAllBills() {
         try {
             arrayList = new ArrayList<>();
@@ -98,6 +115,7 @@ public class CartFragment extends Fragment {
 
     private void onClickPay(){
         Intent it = new Intent(getContext(), PayActivity.class);
+        it.putExtra("id",id);
         startActivity(it);
     }
 }

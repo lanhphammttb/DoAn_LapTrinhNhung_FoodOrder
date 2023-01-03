@@ -100,6 +100,12 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment {
         });
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     private void getAllBills() {
         try {
             arrayList = new ArrayList<>();

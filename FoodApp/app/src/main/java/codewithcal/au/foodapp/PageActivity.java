@@ -32,6 +32,7 @@ public class PageActivity extends AppCompatActivity {
     private ActivityPageBinding binding;
     HomeFragment homeFragment = new HomeFragment();
     CartFragment cartFragment = new CartFragment();
+    private String ids;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,19 +42,14 @@ public class PageActivity extends AppCompatActivity {
         tvUserId = findViewById(R.id.tv_user_id_page);
         tvUserInfo = findViewById(R.id.tv_user_info_page);
         Bundle bundleReceive = getIntent().getExtras();
-
         if (bundleReceive != null){
             User user = (User) bundleReceive.get("obj_account");
             if(user != null){
                 tvUserInfo.setText(user.toString());
-                String ids = String.valueOf(user.getId());
+                ids = String.valueOf(user.getId());
                 tvUserId.setText(ids);
             }
         }
-
-        //Intent i = new Intent(PageActivity.this, PayActivity.class);
-        //i.putExtra("id",tvUserId.getText());
-        //startActivity(i);
 
         bottomNavigationView  = findViewById(R.id.bottom_navigation);
 
@@ -72,7 +68,7 @@ public class PageActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment).commit();
                         return true;
                     case R.id.item_cart:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container,cartFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container,CartFragment.getInstance(ids)).commit();
                         return true;
                 }
 
