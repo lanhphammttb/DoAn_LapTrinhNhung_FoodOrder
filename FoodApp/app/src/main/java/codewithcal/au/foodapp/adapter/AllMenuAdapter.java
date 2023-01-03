@@ -21,10 +21,15 @@ import codewithcal.au.foodapp.model.Food;
 public class AllMenuAdapter extends RecyclerView.Adapter<AllMenuAdapter.AllMenuViewHolder> {
     Context context;
     List<Food> allmenuList;
+    String id;
 
     public AllMenuAdapter(Context context ,List<Food> allmenuList) {
         this.context = context;
         this.allmenuList = allmenuList;
+    }
+
+    public AllMenuAdapter(String id) {
+        this.id = id;
     }
 
     @NonNull
@@ -37,8 +42,8 @@ public class AllMenuAdapter extends RecyclerView.Adapter<AllMenuAdapter.AllMenuV
     @SuppressLint("RecyclerView")
     @Override
     public void onBindViewHolder(@NonNull AllMenuViewHolder holder, int position) {
-        String ids = String.valueOf(allmenuList.get(position).getId());
-        holder.idFood.setText(ids);
+        //String idFoods = String.valueOf(allmenuList.get(position).getId());
+        holder.idFood.setText(String.valueOf(allmenuList.get(position).getId()));
         holder.nameFood.setText(allmenuList.get(position).getName());
         holder.priceFood.setText("$"+allmenuList.get(position).getPrice());
         holder.typeFood.setText(allmenuList.get(position).getType());
@@ -47,8 +52,9 @@ public class AllMenuAdapter extends RecyclerView.Adapter<AllMenuAdapter.AllMenuV
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, FoodDetails.class);
-                String ids = String.valueOf(allmenuList.get(position).getId());
-                i.putExtra("id", ids);
+                //String idFoods = String.valueOf(allmenuList.get(position).getId());
+                i.putExtra("userId",id);
+                i.putExtra("id", String.valueOf(allmenuList.get(position).getId()));
                 i.putExtra("name", allmenuList.get(position).getName());
                 i.putExtra("price", allmenuList.get(position).getPrice());
                 i.putExtra("type", allmenuList.get(position).getType());

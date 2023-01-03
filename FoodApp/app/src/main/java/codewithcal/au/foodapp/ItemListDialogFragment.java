@@ -1,5 +1,6 @@
 package codewithcal.au.foodapp;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -37,11 +38,13 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment {
     private RecyclerView rcvCart;
     private int idDelete;
     private FloatingActionButton btnPay;
+    String id;
 
-    public static ItemListDialogFragment newInstance(int itemCount) {
+    public static ItemListDialogFragment getInstance(String id) {
         final ItemListDialogFragment fragment = new ItemListDialogFragment();
-        final Bundle args = new Bundle();
-        fragment.setArguments(args);
+        final Bundle bundle = new Bundle();
+        bundle.putSerializable("user_id", id);
+        fragment.setArguments(bundle);
         return fragment;
     }
 

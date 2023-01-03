@@ -45,8 +45,8 @@ public class PayDetailBillAdapter extends RecyclerView.Adapter<PayDetailBillAdap
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         DetailBill detailBill = arrayList.get(position);
-        String ids = String.valueOf(arrayList.get(position).getId());
-        holder.id.setText(ids);
+        //String ids = String.valueOf(arrayList.get(position).getId());
+        holder.id.setText(String.valueOf(arrayList.get(position).getId()));
         holder.name.setText(detailBill.getName());
         holder.quantity.setText(Integer.toString(detailBill.getQuantity()));
         holder.btnAdd.setOnClickListener(new View.OnClickListener() {

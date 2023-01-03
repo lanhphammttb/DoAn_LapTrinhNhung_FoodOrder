@@ -46,10 +46,6 @@ public class LoginActivity extends AppCompatActivity {
 
         apiInterface = RetrofitClient.getRetrofitInstance().create(ApiInterface.class);
 
-        ActivityLoginBinding activityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
-        LoginViewModel loginViewModel = new LoginViewModel();
-        activityLoginBinding.setLoginViewModel(loginViewModel);
-
         edEmail = findViewById(R.id.ed_email);
         edPassword = findViewById(R.id.ed_password);
         btnLogin = findViewById(R.id.btn_login);

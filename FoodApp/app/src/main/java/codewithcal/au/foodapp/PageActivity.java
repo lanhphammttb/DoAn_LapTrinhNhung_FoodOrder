@@ -65,7 +65,7 @@ public class PageActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.item_home:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container,HomeFragment.getInstance(ids)).commit();
                         return true;
                     case R.id.item_cart:
                         getSupportFragmentManager().beginTransaction().replace(R.id.container,CartFragment.getInstance(ids)).commit();

@@ -46,6 +46,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public void dropTableDetailBill() {
+        // Drop older table if existed
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_DETAIL_BILLS);
+        // Create tables again
+        onCreate(db);
+    }
     /**
      * All CRUD(Create, Read, Update, Delete) Operations
      */

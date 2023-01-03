@@ -110,12 +110,13 @@ public class PayActivity extends AppCompatActivity {
             int idFood = detailBill.getId();
             int quantityFood = detailBill.getQuantity();
             int id = Integer.parseInt(idUser);
-            Bill bill = new Bill(id,idFood + 1,quantityFood);
+            Bill bill = new Bill(id,idFood,quantityFood);
             Call<Bill> call = apiInterface.createBill(bill);
             call.enqueue(new Callback<Bill>() {
                 @Override
                 public void onResponse(Call<Bill> call, Response<Bill> response) {
                     Toast.makeText(PayActivity.this, "OK NHA", Toast.LENGTH_SHORT).show();
+                    db.dropTableDetailBill();
                     Intent i = new Intent(PayActivity.this, FinishActivity.class);
                     startActivity(i);
                 }
