@@ -29,8 +29,6 @@
         app:layout_constraintStart_toStartOf="@+id/name_cart"
         app:layout_constraintTop_toBottomOf="@+id/name_cart" />
 
-
-
     <TextView
         android:id="@+id/price_cart"
         android:layout_width="wrap_content"

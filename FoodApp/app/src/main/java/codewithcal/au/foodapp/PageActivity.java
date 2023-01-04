@@ -1,24 +1,19 @@
 package codewithcal.au.foodapp;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.google.android.material.badge.BadgeDrawable;
-import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
 
 import codewithcal.au.foodapp.databinding.ActivityPageBinding;
-import codewithcal.au.foodapp.databinding.FragmentItemListDialogListDialogBinding;
 import codewithcal.au.foodapp.model.DetailBill;
 import codewithcal.au.foodapp.model.User;
 import codewithcal.au.foodapp.sqlite.DatabaseHandler;
@@ -32,6 +27,7 @@ public class PageActivity extends AppCompatActivity {
     private ActivityPageBinding binding;
     HomeFragment homeFragment = new HomeFragment();
     CartFragment cartFragment = new CartFragment();
+    ProfileFragment profileFragment = new ProfileFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +69,9 @@ public class PageActivity extends AppCompatActivity {
                         return true;
                     case R.id.item_cart:
                         getSupportFragmentManager().beginTransaction().replace(R.id.container,cartFragment).commit();
+                        return true;
+                    case R.id.item_profile:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container,profileFragment).commit();
                         return true;
                 }
 

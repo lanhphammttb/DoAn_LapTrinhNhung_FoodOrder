@@ -7,8 +7,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
+import codewithcal.au.foodapp.model.Account;
 import codewithcal.au.foodapp.model.DetailBill;
 import codewithcal.au.foodapp.model.Food;
+import codewithcal.au.foodapp.model.User;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
@@ -20,10 +22,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "foodsManager";
 
     private static final String TABLE_DETAIL_BILLS = "detailfoods";
+    private static final String TABLE_USER = "user";
     // Contacts Table Columns names
     private static final String KEY_ID = "id";
     private static final String KEY_NAME = "name";
     private static final String KEY_QUANTITY = "quantity";
+    private static final String KEY_USERNAME = "username";
+    private static final String KEY_EMAIL = "email";
+    private static final String KEY_PASSWORD = "password";
+
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -35,6 +42,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
                 + KEY_QUANTITY + " TEXT" + ")";
         db.execSQL(CREATE_DETAIL_BILL_TABLE);
+
+        String CREATE_USER_TABLE = "CREATE TABLE " + TABLE_USER + "("
+                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_USERNAME + " TEXT,"
+                + KEY_EMAIL + " TEXT," + KEY_PASSWORD + " TEXT" + ")";
+        db.execSQL(CREATE_USER_TABLE);
     }
 
     // Upgrading database
@@ -42,6 +54,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_DETAIL_BILLS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
         // Create tables again
         onCreate(db);
     }
@@ -140,4 +153,54 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return count;
     }
 
+    public void saveUser(User user) throws Exception {
+        SQLiteDatabase db = null;
+        try {
+            //mo ket noiss
+            db = this.getWritableDatabase();
+
+            ContentValues values = new ContentValues();
+            values.put(KEY_ID, user.getId());
+            values.put(KEY_USERNAME, user.getUsername());
+            values.put(KEY_EMAIL, user.getEmail());
+            values.put(KEY_PASSWORD, user.getPassword());
+
+            long id = db.insert(TABLE_USER, "", values);
+
+        } catch (Exception ex) {
+            throw new Exception(ex.getMessage());
+        } finally {
+            db.close(); // Closing database connection
+        };
+    }
+
+    public void deleteUser(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_USER, KEY_ID + " = ?",
+                new String[]{String.valueOf(id)});
+        db.close();
+    }
+
+    public ArrayList<User>  getUser() {
+        ArrayList<User> profile = new ArrayList<User>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_USER;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                User user = new User();
+                user.setId(cursor.getInt(0));
+                user.setUsername(cursor.getString(1));
+                user.setEmail(cursor.getString(2));
+                user.setPassword(cursor.getString(3));
+                // Adding contact to list
+                profile.add(user);
+            } while (cursor.moveToNext());
+        }
+
+        // return food list
+        return profile;
+    }
 }
