@@ -2,48 +2,45 @@ package codewithcal.au.foodapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import codewithcal.au.foodapp.databinding.ActivityRegisterBinding;
 import codewithcal.au.foodapp.model.User;
-import codewithcal.au.foodapp.retrofit.ApiInterface;
-import codewithcal.au.foodapp.retrofit.RetrofitClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class RegisterActivity extends AppCompatActivity{
-    private EditText edUsername;
-    private EditText edEmail;
-    private EditText edPassword;
-    private Button btnToLogin;
+import codewithcal.au.foodapp.presenter.Presenter;
+public class RegisterActivity extends AppCompatActivity {
+    private String username, email, password;
+    private EditText edUsername, edEmail, edPassword;
+    private Button btnRegister;
     private ImageView btnBack;
-    private User mUser;
+    private RegisterViewModel registerViewModel;
+    private ActivityRegisterBinding activityRegisterBinding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        ActivityRegisterBinding activityRegisterBinding = DataBindingUtil.setContentView(this, R.layout.activity_register);
-        RegisterViewModel registerViewModel = new RegisterViewModel();
+        activityRegisterBinding = DataBindingUtil.setContentView(this, R.layout.activity_register);
+        registerViewModel = new RegisterViewModel(this);
         activityRegisterBinding.setRegisterViewModel(registerViewModel);
 
-        edUsername = findViewById(R.id.ed_username);
-        edEmail = findViewById(R.id.ed_email);
-        edPassword = findViewById(R.id.ed_password);
-        btnToLogin = findViewById(R.id.button_login);
-        btnBack = findViewById(R.id.icon_back);
+        initView();
+
+        activityRegisterBinding.setPresenter(new Presenter() {
+            @Override
+            public void registerData() {
+                username = activityRegisterBinding.edUsername.getText().toString().trim();
+                email = activityRegisterBinding.edEmail.getText().toString();
+                password = activityRegisterBinding.edPassword.getText().toString();
+                registerViewModel.sendRegisterRequest(username, email, password);
+            }
+        });
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,29 +49,36 @@ public class RegisterActivity extends AppCompatActivity{
             }
         });
 
-        btnToLogin.setOnClickListener(new View.OnClickListener() {
+        btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ClickToLogin();
+                ClickRegister();
             }
         });
     }
 
-    private void ClickToLogin(){
-        String strUsername = edUsername.getText().toString().trim();
-        String strEmail = edEmail.getText().toString().trim();
-        String strPassword = edPassword.getText().toString().trim();
+    private void initView() {
+        edUsername = findViewById(R.id.ed_username);
+        edEmail = findViewById(R.id.ed_email);
+        edPassword = findViewById(R.id.ed_password);
+        btnRegister = findViewById(R.id.button_register);
+        btnBack = findViewById(R.id.icon_back);
+    }
+
+    private void ClickRegister() {
         Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-        //Bundle bundle = new Bundle();
-        //bundle.putSerializable("obj_account", mUser);
-        //intent.putExtras(bundle);
+        Bundle bundle = new Bundle();
+        User user = new User(email, password);
+        bundle.putSerializable("account_from_register", user);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 
-    private void clickBack(){
+    private void clickBack() {
         Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("obj_account", mUser);
+        User user = new User(email, password);
+        bundle.putSerializable("account_from_register", user);
         intent.putExtras(bundle);
         startActivity(intent);
     }

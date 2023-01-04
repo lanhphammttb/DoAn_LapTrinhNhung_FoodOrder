@@ -1,11 +1,11 @@
 package codewithcal.au.foodapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -21,14 +21,15 @@ import codewithcal.au.foodapp.sqlite.DatabaseHandler;
 public class PageActivity extends AppCompatActivity {
     TextView tvUserId;
     TextView tvUserInfo;
-    private ArrayList<DetailBill> arrayList;
-    private DatabaseHandler db;
     BottomNavigationView bottomNavigationView;
-    private ActivityPageBinding binding;
     HomeFragment homeFragment = new HomeFragment();
     CartFragment cartFragment = new CartFragment();
     ProfileFragment profileFragment = new ProfileFragment();
+    private ArrayList<DetailBill> arrayList;
+    private DatabaseHandler db;
+    private ActivityPageBinding binding;
     private String ids;
+    private User mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,18 +39,19 @@ public class PageActivity extends AppCompatActivity {
         tvUserId = findViewById(R.id.tv_user_id_page);
         tvUserInfo = findViewById(R.id.tv_user_info_page);
         Bundle bundleReceive = getIntent().getExtras();
-        if (bundleReceive != null){
+        if (bundleReceive != null) {
             User user = (User) bundleReceive.get("obj_account");
-            if(user != null){
+            if (user != null) {
                 tvUserInfo.setText(user.toString());
                 ids = String.valueOf(user.getId());
                 tvUserId.setText(ids);
+                mUser = user;
             }
         }
 
-        bottomNavigationView  = findViewById(R.id.bottom_navigation);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
 
         BadgeDrawable badgeDrawable = bottomNavigationView.getOrCreateBadge(R.id.item_cart);
         badgeDrawable.setVisible(true);
@@ -59,15 +61,15 @@ public class PageActivity extends AppCompatActivity {
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.item_home:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container,HomeFragment.getInstance(ids)).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, HomeFragment.getInstance(ids)).commit();
                         return true;
                     case R.id.item_cart:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container,CartFragment.getInstance(ids)).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, CartFragment.getInstance(ids)).commit();
                         return true;
                     case R.id.item_profile:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container,profileFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, ProfileFragment.getInstance(mUser)).commit();
                         return true;
                 }
 

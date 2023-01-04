@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,15 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
-import codewithcal.au.foodapp.adapter.CartAdapter;
 import codewithcal.au.foodapp.adapter.DetailBillAdapter;
 import codewithcal.au.foodapp.model.DetailBill;
-import codewithcal.au.foodapp.model.Food;
-import codewithcal.au.foodapp.model.User;
 import codewithcal.au.foodapp.sqlite.DatabaseHandler;
 
 public class CartActivity extends AppCompatActivity {
@@ -35,6 +28,7 @@ public class CartActivity extends AppCompatActivity {
     private DatabaseHandler db;
     private int idDelete;
     private FloatingActionButton btnPay;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +47,7 @@ public class CartActivity extends AppCompatActivity {
             @Override
             public void onItemLongClick(int position, View v) {
                 rcvCart = findViewById(R.id.all_bill_recycler);
-                AlertDialog.Builder alertDialog = new  AlertDialog.Builder(CartActivity.this);
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(CartActivity.this);
                 alertDialog.setTitle("Bạn có chắc muốn xóa");
                 alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
                 //alertDialog.setMessage(selectedValue);
@@ -64,11 +58,13 @@ public class CartActivity extends AppCompatActivity {
                         db.deleteDetailBill(idDelete);
                         arrayList.remove(x);
                         detailBillAdapter.notifyDataSetChanged();
-                    } });
+                    }
+                });
                 alertDialog.setPositiveButton("Thoát", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         //alertDialog.dismiss();
-                    } });
+                    }
+                });
                 alertDialog.show();
             }
         });
@@ -79,9 +75,12 @@ public class CartActivity extends AppCompatActivity {
         btnPay = findViewById(R.id.btn_pay);
         btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { onClickPay();}
+            public void onClick(View v) {
+                onClickPay();
+            }
         });
     }
+
     private void getAllBills() {
         try {
             arrayList = new ArrayList<>();
@@ -91,7 +90,7 @@ public class CartActivity extends AppCompatActivity {
         }
     }
 
-    private void onClickPay(){
+    private void onClickPay() {
         Intent it = new Intent(CartActivity.this, PayActivity.class);
         startActivity(it);
     }

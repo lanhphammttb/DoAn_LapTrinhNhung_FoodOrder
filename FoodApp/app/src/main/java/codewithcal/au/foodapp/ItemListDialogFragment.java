@@ -1,36 +1,32 @@
 package codewithcal.au.foodapp;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
-
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
 import codewithcal.au.foodapp.adapter.BottomDetailBillAdapter;
-import codewithcal.au.foodapp.adapter.DetailBillAdapter;
 import codewithcal.au.foodapp.databinding.FragmentItemListDialogListDialogBinding;
 import codewithcal.au.foodapp.model.DetailBill;
 import codewithcal.au.foodapp.sqlite.DatabaseHandler;
 
 public class ItemListDialogFragment extends BottomSheetDialogFragment {
+    String id;
     private ArrayList<DetailBill> arrayList;
     private BottomDetailBillAdapter bottomDetailBillAdapter;
     private DatabaseHandler db;
@@ -38,7 +34,6 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment {
     private RecyclerView rcvCart;
     private int idDelete;
     private FloatingActionButton btnPay;
-    String id;
 
     public static ItemListDialogFragment getInstance(String id) {
         final ItemListDialogFragment fragment = new ItemListDialogFragment();
@@ -59,6 +54,7 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment {
         binding = FragmentItemListDialogListDialogBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         db = new DatabaseHandler(getContext());
@@ -72,7 +68,7 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment {
             @Override
             public void onItemLongClick(int position, View v) {
                 rcvCart = view.findViewById(R.id.all_bill_recycler);
-                AlertDialog.Builder alertDialog = new  AlertDialog.Builder(getContext());
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
                 alertDialog.setTitle("Bạn có chắc muốn xóa");
                 alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
                 //alertDialog.setMessage(selectedValue);
@@ -83,11 +79,13 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment {
                         db.deleteDetailBill(idDelete);
                         arrayList.remove(x);
                         bottomDetailBillAdapter.notifyDataSetChanged();
-                    } });
+                    }
+                });
                 alertDialog.setPositiveButton("Thoát", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         //alertDialog.dismiss();
-                    } });
+                    }
+                });
                 alertDialog.show();
             }
         });
@@ -99,7 +97,9 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment {
         rcvCart.setLayoutManager(new LinearLayoutManager(getContext()));
         btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { onClickPay();}
+            public void onClick(View v) {
+                onClickPay();
+            }
         });
     }
 
@@ -118,7 +118,7 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment {
         }
     }
 
-    private void onClickPay(){
+    private void onClickPay() {
         Intent it = new Intent(getContext(), PayActivity.class);
         startActivity(it);
     }

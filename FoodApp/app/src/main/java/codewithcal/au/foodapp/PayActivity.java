@@ -1,6 +1,5 @@
 package codewithcal.au.foodapp;
 
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -18,13 +16,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import codewithcal.au.foodapp.adapter.DetailBillAdapter;
 import codewithcal.au.foodapp.adapter.PayDetailBillAdapter;
 import codewithcal.au.foodapp.model.Bill;
 import codewithcal.au.foodapp.model.DetailBill;
-import codewithcal.au.foodapp.model.User;
 import codewithcal.au.foodapp.retrofit.ApiInterface;
 import codewithcal.au.foodapp.retrofit.RetrofitClient;
 import codewithcal.au.foodapp.sqlite.DatabaseHandler;
@@ -42,6 +37,7 @@ public class PayActivity extends AppCompatActivity {
     private PayDetailBillAdapter payDetailBillAdapter;
     private DatabaseHandler db;
     private int idDelete;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +56,7 @@ public class PayActivity extends AppCompatActivity {
             @Override
             public void onItemLongClick(int position, View v) {
                 rcvPay = findViewById(R.id.all_bill_pay_recycler);
-                AlertDialog.Builder alertDialog = new  AlertDialog.Builder(PayActivity.this);
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(PayActivity.this);
                 alertDialog.setTitle("Bạn có chắc muốn xóa");
                 alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
                 //alertDialog.setMessage(selectedValue);
@@ -71,11 +67,13 @@ public class PayActivity extends AppCompatActivity {
                         db.deleteDetailBill(idDelete);
                         arrayList.remove(x);
                         payDetailBillAdapter.notifyDataSetChanged();
-                    } });
+                    }
+                });
                 alertDialog.setPositiveButton("Thoát", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         //alertDialog.dismiss();
-                    } });
+                    }
+                });
                 alertDialog.show();
             }
         });
@@ -84,7 +82,7 @@ public class PayActivity extends AppCompatActivity {
         idUser = intent.getStringExtra("id");
         itemId.setText(idUser);
 
-        rcvPay= findViewById(R.id.all_bill_pay_recycler);
+        rcvPay = findViewById(R.id.all_bill_pay_recycler);
         rcvPay.setAdapter(payDetailBillAdapter);
         rcvPay.addItemDecoration(new DividerItemDecoration(rcvPay.getContext(), DividerItemDecoration.VERTICAL));
         rcvPay.setLayoutManager(new LinearLayoutManager(this));
@@ -97,6 +95,7 @@ public class PayActivity extends AppCompatActivity {
         });
 
     }
+
     private void getAllBills() {
         try {
             arrayList = new ArrayList<>();
@@ -105,12 +104,13 @@ public class PayActivity extends AppCompatActivity {
             Log.e("getAllDetailBills", ex.getMessage());
         }
     }
+
     private void postBills() {
-        for (DetailBill detailBill : arrayList){
+        for (DetailBill detailBill : arrayList) {
             int idFood = detailBill.getId();
             int quantityFood = detailBill.getQuantity();
             int id = Integer.parseInt(idUser);
-            Bill bill = new Bill(id,idFood,quantityFood);
+            Bill bill = new Bill(id, idFood, quantityFood);
             Call<Bill> call = apiInterface.createBill(bill);
             call.enqueue(new Callback<Bill>() {
                 @Override

@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,7 +22,7 @@ public class AllMenuAdapter extends RecyclerView.Adapter<AllMenuAdapter.AllMenuV
     List<Food> allmenuList;
     String id;
 
-    public AllMenuAdapter(Context context ,List<Food> allmenuList) {
+    public AllMenuAdapter(Context context, List<Food> allmenuList) {
         this.context = context;
         this.allmenuList = allmenuList;
     }
@@ -45,7 +44,7 @@ public class AllMenuAdapter extends RecyclerView.Adapter<AllMenuAdapter.AllMenuV
         //String idFoods = String.valueOf(allmenuList.get(position).getId());
         holder.idFood.setText(String.valueOf(allmenuList.get(position).getId()));
         holder.nameFood.setText(allmenuList.get(position).getName());
-        holder.priceFood.setText("$"+allmenuList.get(position).getPrice());
+        holder.priceFood.setText("$" + allmenuList.get(position).getPrice());
         holder.typeFood.setText(allmenuList.get(position).getType());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +52,7 @@ public class AllMenuAdapter extends RecyclerView.Adapter<AllMenuAdapter.AllMenuV
             public void onClick(View view) {
                 Intent i = new Intent(context, FoodDetails.class);
                 //String idFoods = String.valueOf(allmenuList.get(position).getId());
-                i.putExtra("userId",id);
+                i.putExtra("userId", id);
                 i.putExtra("id", String.valueOf(allmenuList.get(position).getId()));
                 i.putExtra("name", allmenuList.get(position).getName());
                 i.putExtra("price", allmenuList.get(position).getPrice());
@@ -66,14 +65,12 @@ public class AllMenuAdapter extends RecyclerView.Adapter<AllMenuAdapter.AllMenuV
 
     @Override
     public int getItemCount() {
-        if(allmenuList != null){
+        if (allmenuList != null) {
             return allmenuList.size();
-        }
-        else
-            return 0;
+        } else return 0;
     }
 
-    public static class AllMenuViewHolder extends RecyclerView.ViewHolder{
+    public static class AllMenuViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView idFood, nameFood, typeFood, priceFood;
 
@@ -82,7 +79,7 @@ public class AllMenuAdapter extends RecyclerView.Adapter<AllMenuAdapter.AllMenuV
             idFood = itemView.findViewById(R.id.id_food);
             nameFood = itemView.findViewById(R.id.name_food);
             priceFood = itemView.findViewById(R.id.price_food);
-            typeFood= itemView.findViewById(R.id.type_food);
+            typeFood = itemView.findViewById(R.id.type_food);
         }
     }
 

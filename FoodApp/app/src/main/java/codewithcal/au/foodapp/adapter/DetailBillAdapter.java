@@ -1,7 +1,6 @@
 package codewithcal.au.foodapp.adapter;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,17 +11,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import codewithcal.au.foodapp.PageActivity;
 import codewithcal.au.foodapp.R;
-import codewithcal.au.foodapp.databinding.FragmentCartBinding;
 import codewithcal.au.foodapp.model.DetailBill;
-import codewithcal.au.foodapp.model.User;
 
 
 public class DetailBillAdapter extends RecyclerView.Adapter<DetailBillAdapter.MyViewHolder> {
-    private ArrayList<DetailBill> arrayList;
-    private Context context;
-    private ClickListeners clickListeners;
+    private final ArrayList<DetailBill> arrayList;
+    private final Context context;
+    private final ClickListeners clickListeners;
+
     public DetailBillAdapter(Context context, ArrayList<DetailBill> arrayList, ClickListeners clickListeners) {
         this.arrayList = arrayList;
         this.context = context;
@@ -32,7 +29,7 @@ public class DetailBillAdapter extends RecyclerView.Adapter<DetailBillAdapter.My
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bill_recycler_items,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bill_recycler_items, parent, false);
         return new MyViewHolder(view);
     }
 
@@ -47,14 +44,21 @@ public class DetailBillAdapter extends RecyclerView.Adapter<DetailBillAdapter.My
 
     @Override
     public int getItemCount() {
-        if(arrayList!=null && arrayList.size()>0)
-        return arrayList.size();
+        if (arrayList != null && arrayList.size() > 0)
+            return arrayList.size();
         else
             return 0;
     }
 
+    public interface ClickListeners {
+        void onItemClick(int position, View v);
+
+        void onItemLongClick(int position, View v);
+    }
+
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         TextView id, name, quantity;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             id = itemView.findViewById(R.id.id_cart);
@@ -69,17 +73,13 @@ public class DetailBillAdapter extends RecyclerView.Adapter<DetailBillAdapter.My
 
         @Override
         public void onClick(View v) {
-            clickListeners.onItemClick(getAdapterPosition(),v);//callback forwarding
+            clickListeners.onItemClick(getBindingAdapterPosition(), v);//callback forwarding
         }
 
         @Override
         public boolean onLongClick(View v) {
-            clickListeners.onItemLongClick(getAdapterPosition(),v);
+            clickListeners.onItemLongClick(getBindingAdapterPosition(), v);
             return true;
         }
-    }
-    public interface ClickListeners{
-        void onItemClick(int position, View v);
-        void onItemLongClick(int position, View v);
     }
 }

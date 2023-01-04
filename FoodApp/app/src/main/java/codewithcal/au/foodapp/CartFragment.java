@@ -3,8 +3,11 @@ package codewithcal.au.foodapp;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -13,22 +16,13 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
 import codewithcal.au.foodapp.adapter.DetailBillAdapter;
-import codewithcal.au.foodapp.databinding.FragmentCartBinding;
 import codewithcal.au.foodapp.model.DetailBill;
-import codewithcal.au.foodapp.model.User;
 import codewithcal.au.foodapp.sqlite.DatabaseHandler;
-import kotlin.jvm.internal.PropertyReference0Impl;
 
 public class CartFragment extends Fragment {
     private ArrayList<DetailBill> arrayList;
@@ -39,7 +33,7 @@ public class CartFragment extends Fragment {
     private FloatingActionButton btnPay;
     private String id;
 
-    public static CartFragment getInstance(String id){
+    public static CartFragment getInstance(String id) {
         CartFragment cartFragment = new CartFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("user_id", id);
@@ -57,6 +51,7 @@ public class CartFragment extends Fragment {
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_cart, container, false);
     }
+
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         db = new DatabaseHandler(getContext());
@@ -70,7 +65,7 @@ public class CartFragment extends Fragment {
             @Override
             public void onItemLongClick(int position, View v) {
                 rcvCart = view.findViewById(R.id.all_bill_recycler);
-                AlertDialog.Builder alertDialog = new  AlertDialog.Builder(getContext());
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
                 alertDialog.setTitle("Bạn có chắc muốn xóa");
                 alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
                 //alertDialog.setMessage(selectedValue);
@@ -81,11 +76,13 @@ public class CartFragment extends Fragment {
                         db.deleteDetailBill(idDelete);
                         arrayList.remove(x);
                         detailBillAdapter.notifyDataSetChanged();
-                    } });
+                    }
+                });
                 alertDialog.setPositiveButton("Thoát", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         //alertDialog.dismiss();
-                    } });
+                    }
+                });
                 alertDialog.show();
             }
         });
@@ -93,14 +90,15 @@ public class CartFragment extends Fragment {
         rcvCart.setAdapter(detailBillAdapter);
         rcvCart.addItemDecoration(new DividerItemDecoration(rcvCart.getContext(), DividerItemDecoration.VERTICAL));
         rcvCart.setLayoutManager(new LinearLayoutManager(getContext()));
-        btnPay = view.findViewById(R.id.btn_pay);
-
-        if (getArguments() != null){
+        if (getArguments() != null) {
             this.id = getArguments().getString("user_id");
         }
+        btnPay = view.findViewById(R.id.btn_pay);
         btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { onClickPay();}
+            public void onClick(View v) {
+                onClickPay();
+            }
         });
     }
 
@@ -113,9 +111,9 @@ public class CartFragment extends Fragment {
         }
     }
 
-    private void onClickPay(){
+    private void onClickPay() {
         Intent it = new Intent(getContext(), PayActivity.class);
-        it.putExtra("id",id);
+        it.putExtra("id", id);
         startActivity(it);
     }
 }

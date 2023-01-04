@@ -7,15 +7,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
-
-import codewithcal.au.foodapp.databinding.ActivityFoodDetailsBinding;
 import codewithcal.au.foodapp.model.DetailBill;
 import codewithcal.au.foodapp.sqlite.DatabaseHandler;
 
-public class FoodDetails extends AppCompatActivity{
+public class FoodDetails extends AppCompatActivity {
     TextView itemId, itemName, itemPrice, itemType;
     String userId, id, name, price, type;
     Button btnAddToCart;
@@ -38,7 +36,7 @@ public class FoodDetails extends AppCompatActivity{
 
         itemId = findViewById(R.id.id);
         itemName = findViewById(R.id.name);
-        itemPrice= findViewById(R.id.price);
+        itemPrice = findViewById(R.id.price);
         itemType = findViewById(R.id.type);
         btnBack = findViewById(R.id.icon_back);
 
