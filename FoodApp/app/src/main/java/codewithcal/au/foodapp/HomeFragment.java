@@ -36,6 +36,16 @@ public class HomeFragment extends Fragment {
     AllMenuAdapter allMenuAdapter;
 
     List<Food> allmenuList;
+    String id;
+
+    public static HomeFragment getInstance(String id){
+        HomeFragment homeFragment = new HomeFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("user_id", id);
+        homeFragment.setArguments(bundle);
+        return homeFragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,11 +69,13 @@ public class HomeFragment extends Fragment {
 
         allmenuList= new ArrayList<>();
         callApiGetUsers();
-        dataInitalize();
+        if (getArguments() != null){
+            this.id = getArguments().getString("user_id");
+        }
+        AllMenuAdapter idAdapter;
+        idAdapter = new AllMenuAdapter(id);
     }
 
-    private void dataInitalize() {
-    }
     private void callApiGetUsers() {
         Call<List<Food>> call = apiInterface.getAllData();
         call.enqueue(new Callback<List<Food>>() {

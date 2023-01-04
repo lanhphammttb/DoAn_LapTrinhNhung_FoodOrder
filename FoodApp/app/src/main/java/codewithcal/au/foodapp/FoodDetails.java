@@ -11,12 +11,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
+import codewithcal.au.foodapp.databinding.ActivityFoodDetailsBinding;
 import codewithcal.au.foodapp.model.DetailBill;
 import codewithcal.au.foodapp.sqlite.DatabaseHandler;
 
-public class FoodDetails extends AppCompatActivity {
+public class FoodDetails extends AppCompatActivity{
     TextView itemId, itemName, itemPrice, itemType;
-    String id, name, price, type;
+    String userId, id, name, price, type;
     Button btnAddToCart;
     ImageView btnBack;
     private DatabaseHandler db;
@@ -29,6 +30,7 @@ public class FoodDetails extends AppCompatActivity {
         btnAddToCart = findViewById(R.id.btn_add_to_cart);
         Intent intent = getIntent();
 
+        userId = intent.getStringExtra("userId");
         id = intent.getStringExtra("id");
         name = intent.getStringExtra("name");
         price = intent.getStringExtra("price");
@@ -69,16 +71,10 @@ public class FoodDetails extends AppCompatActivity {
             //Lưu vào sqlite
             DetailBill f = new DetailBill(id, name, 1);
             db.addDetailBill(f);
-            //Intent i = new Intent(FoodDetails.this, CartActivity.class);
-            //this.startActivity(i);
-
-            //BottomSheetDialogCart bottomSheet = new BottomSheetDialogCart();
-            //bottomSheet.show(getSupportFragmentManager(), "bottomSheetDialogCart");
             ItemListDialogFragment item = new ItemListDialogFragment();
             item.show(getSupportFragmentManager(), "itemListDialogFragment");
         } catch (Exception ex) {
             Log.e("Add food to cart", ex.getMessage());
         }
     }
-
 }

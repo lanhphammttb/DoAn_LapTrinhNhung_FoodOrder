@@ -16,7 +16,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
     // Database Name
     private static final String DATABASE_NAME = "foodsManager";
@@ -59,6 +59,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public void dropTableDetailBill() {
+        // Drop older table if existed
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_DETAIL_BILLS);
+        // Create tables again
+        onCreate(db);
+    }
     /**
      * All CRUD(Create, Read, Update, Delete) Operations
      */
@@ -83,7 +90,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         };
     }
 
-    DetailBill getDetailBill(int id) {
+    public DetailBill getDetailBill(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_DETAIL_BILLS, new String[]{KEY_ID,
@@ -98,6 +105,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // return contact
         return detailBill;
     }
+
     public ArrayList<DetailBill> getAllDetailBills() {
         ArrayList<DetailBill> detailBillList = new ArrayList<DetailBill>();
         // Select All Query
@@ -123,7 +131,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return detailBillList;
     }
     // Updating single contact
-    public int updateDetailFood(DetailBill detailBill) {
+    public int updateDetailBill(DetailBill detailBill) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
