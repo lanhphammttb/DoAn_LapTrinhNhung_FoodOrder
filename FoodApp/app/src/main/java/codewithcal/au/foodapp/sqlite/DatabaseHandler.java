@@ -7,9 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
-import codewithcal.au.foodapp.model.Account;
 import codewithcal.au.foodapp.model.DetailBill;
-import codewithcal.au.foodapp.model.Food;
 import codewithcal.au.foodapp.model.User;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
