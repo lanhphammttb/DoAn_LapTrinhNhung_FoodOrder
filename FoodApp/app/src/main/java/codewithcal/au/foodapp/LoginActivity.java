@@ -22,7 +22,6 @@ import java.util.List;
 import codewithcal.au.foodapp.adapter.AllMenuAdapter;
 import codewithcal.au.foodapp.databinding.ActivityLoginBinding;
 import codewithcal.au.foodapp.databinding.ActivityMainBinding;
-import codewithcal.au.foodapp.model.Account;
 import codewithcal.au.foodapp.model.DetailBill;
 import codewithcal.au.foodapp.model.Food;
 import codewithcal.au.foodapp.model.User;
@@ -51,10 +50,10 @@ public class LoginActivity extends AppCompatActivity {
 
         apiInterface = RetrofitClient.getRetrofitInstance().create(ApiInterface.class);
 
-        ActivityLoginBinding activityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
-        LoginViewModel loginViewModel = new LoginViewModel();
-        activityLoginBinding.setLoginViewModel(loginViewModel);
-        db = new DatabaseHandler(this);
+//        ActivityLoginBinding activityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+//        LoginViewModel loginViewModel = new LoginViewModel();
+//        activityLoginBinding.setLoginViewModel(loginViewModel);
+//        db = new DatabaseHandler(this);
 
         edEmail = findViewById(R.id.ed_email);
         edPassword = findViewById(R.id.ed_password);

@@ -30,7 +30,6 @@ public class FoodDetails extends AppCompatActivity{
         btnAddToCart = findViewById(R.id.btn_add_to_cart);
         Intent intent = getIntent();
 
-        userId = intent.getStringExtra("userId");
         id = intent.getStringExtra("id");
         name = intent.getStringExtra("name");
         price = intent.getStringExtra("price");
