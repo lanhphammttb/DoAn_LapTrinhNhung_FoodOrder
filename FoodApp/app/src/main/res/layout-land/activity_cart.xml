@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_pay"
@@ -21,14 +21,7 @@
         android:id="@+id/all_bill_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-<<<<<<< HEAD
+        android:paddingRight="100dp"
         tools:listitem="@layout/bill_recycler_items" />
-
-=======
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="-16dp"
-        tools:listitem="@layout/bill_recycler_items" />
->>>>>>> bb7ea730c198030e94658b7b8981798ec7198f4c
 </androidx.constraintlayout.widget.ConstraintLayout>

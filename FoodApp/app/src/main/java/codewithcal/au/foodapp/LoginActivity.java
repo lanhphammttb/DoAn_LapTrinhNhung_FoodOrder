@@ -9,6 +9,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
+<<<<<<< HEAD
+=======
+
+import codewithcal.au.foodapp.adapter.AllMenuAdapter;
+import codewithcal.au.foodapp.databinding.ActivityLoginBinding;
+import codewithcal.au.foodapp.databinding.ActivityMainBinding;
+import codewithcal.au.foodapp.model.DetailBill;
+import codewithcal.au.foodapp.model.Food;
+>>>>>>> bb7ea730c198030e94658b7b8981798ec7198f4c
 import codewithcal.au.foodapp.model.User;
 import codewithcal.au.foodapp.retrofit.ApiInterface;
 import codewithcal.au.foodapp.retrofit.RetrofitClient;
@@ -33,7 +42,14 @@ public class LoginActivity extends AppCompatActivity {
 
         apiInterface = RetrofitClient.getRetrofitInstance().create(ApiInterface.class);
 
+<<<<<<< HEAD
         db = new DatabaseHandler(this);
+=======
+//        ActivityLoginBinding activityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+//        LoginViewModel loginViewModel = new LoginViewModel();
+//        activityLoginBinding.setLoginViewModel(loginViewModel);
+//        db = new DatabaseHandler(this);
+>>>>>>> bb7ea730c198030e94658b7b8981798ec7198f4c
 
         initView();
 
