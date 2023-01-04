@@ -26,7 +26,7 @@ public interface ApiInterface {
     Call<List<DetailBill>> getFood();
 
     @POST("account")
-    Call<User> createUser(@Body User user);
+    Call<User> createUser(@Body User acount);
 
     @PUT("account")
     Call<User> updateAccount(@Body User user);
