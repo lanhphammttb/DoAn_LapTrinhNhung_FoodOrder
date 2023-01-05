@@ -57,7 +57,7 @@ public class RegisterViewModel extends Observable {
                         }
                     }
                     if (isHasUser) {
-                        showToast("Register success");
+                        showToast("Registering");
                         User new_account = new User(name, email, pass);
                         Call<User> post = apiInterface.createUser(new_account);
                         post.enqueue(new Callback<User>() {

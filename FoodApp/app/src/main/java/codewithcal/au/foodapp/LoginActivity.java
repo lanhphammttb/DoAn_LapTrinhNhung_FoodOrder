@@ -1,11 +1,17 @@
 package codewithcal.au.foodapp;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity{
 
     private EditText edEmail, edPassword;
     private Button btnLogin, btnRegister;
@@ -30,7 +36,12 @@ public class LoginActivity extends AppCompatActivity {
     private List<User> mListUser;
     private User mUser;
     private DatabaseHandler db;
-
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    private void initPreferences() {
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = sharedPreferences.edit();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,13 +49,17 @@ public class LoginActivity extends AppCompatActivity {
 
         apiInterface = RetrofitClient.getRetrofitInstance().create(ApiInterface.class);
 
+        initPreferences();
+
         db = new DatabaseHandler(this);
-//        ActivityLoginBinding activityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
-//        LoginViewModel loginViewModel = new LoginViewModel();
-//        activityLoginBinding.setLoginViewModel(loginViewModel);
-//        db = new DatabaseHandler(this);
 
         initView();
+
+        String email_saved = sharedPreferences.getString("email", "");
+        String password_saved = sharedPreferences.getString("password", "");
+
+        edEmail.setText(email_saved);
+        edPassword.setText(password_saved);
 
         mListUser = new ArrayList<>();
         getListUsers();
@@ -90,16 +105,34 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         if (isHasUser){
-            Intent intent = new Intent(LoginActivity.this, PageActivity.class);
-            try {
-                db.saveUser(mUser);
-            } catch (Exception ex) {
-                Log.e("Save error", ex.getMessage());
-            }
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("obj_account", mUser);
-            intent.putExtras(bundle);
-            startActivity(intent);
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(LoginActivity.this);
+            alertDialog.setTitle("Remember me!");
+            alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+            alertDialog.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    editor.putString("email", String.valueOf(edEmail.getText()));
+                    editor.putString("password", String.valueOf(edPassword.getText()));
+                    editor.commit();
+                    Intent intent = new Intent(LoginActivity.this, PageActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("obj_account", mUser);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+            });
+            alertDialog.setPositiveButton("No", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    editor.putString("email", "");
+                    editor.putString("password", "");
+                    editor.commit();
+                    Intent intent = new Intent(LoginActivity.this, PageActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("obj_account", mUser);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+            });
+              alertDialog.show();
         }else{
             Toast.makeText(LoginActivity.this, "Email or password invalid", Toast.LENGTH_SHORT).show();
         }

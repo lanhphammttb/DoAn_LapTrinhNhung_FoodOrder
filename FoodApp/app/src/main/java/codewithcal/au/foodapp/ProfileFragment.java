@@ -1,9 +1,11 @@
 package codewithcal.au.foodapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,6 +22,7 @@ public class ProfileFragment extends Fragment {
     private DatabaseHandler db;
     private User user;
     private TextView tvUserName, tvEmail;
+    private Button btnLogout;
 
     public static ProfileFragment getInstance(User user) {
         ProfileFragment profileFragment = new ProfileFragment();
@@ -48,9 +51,18 @@ public class ProfileFragment extends Fragment {
         }
         tvUserName = view.findViewById(R.id.text_username);
         tvEmail = view.findViewById(R.id.text_email);
+        btnLogout = view.findViewById(R.id.btn_logout);
 
         tvUserName.setText(user.getUsername());
         tvEmail.setText(user.getEmail());
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 }

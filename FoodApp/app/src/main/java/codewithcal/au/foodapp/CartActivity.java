@@ -48,7 +48,7 @@ public class CartActivity extends AppCompatActivity {
             public void onItemLongClick(int position, View v) {
                 rcvCart = findViewById(R.id.all_bill_recycler);
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(CartActivity.this);
-                alertDialog.setTitle("Bạn có chắc muốn xóa");
+                alertDialog.setTitle("Do you want to delete this item?");
                 alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
                 //alertDialog.setMessage(selectedValue);
                 idDelete = arrayList.get(position).getId();
@@ -60,7 +60,7 @@ public class CartActivity extends AppCompatActivity {
                         detailBillAdapter.notifyDataSetChanged();
                     }
                 });
-                alertDialog.setPositiveButton("Thoát", new DialogInterface.OnClickListener() {
+                alertDialog.setPositiveButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         //alertDialog.dismiss();
                     }
