@@ -96,15 +96,15 @@
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:layout_marginTop="32dp"
-            android:text="@{RegisterViewModel.messageRegister}"
             android:textAlignment="center"
             android:textSize="18sp"
-            android:textColor="@{RegisterViewModel.isSuccess ? @color/blue : @color/red}"
-            android:visibility="@{RegisterViewModel.isShowMessage ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ed_password" />
+<!--            android:text="@{RegisterViewModel.messageRegister}"-->
+<!--            android:textColor="@{RegisterViewModel.isSuccess ? @color/blue : @color/red}"-->
+<!--            android:visibility="@{RegisterViewModel.isShowMessage ? View.VISIBLE : View.GONE}"-->
 
         <Button
             android:id="@+id/button_register"
@@ -112,12 +112,12 @@
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
             android:text="Register"
-            android:onClick="@{()->RegisterViewModel.onClickRegister()}"
-            android:visibility="@{RegisterViewModel.isShowRegister ? View.GONE : View.VISIBLE}"
             app:cornerRadius="50dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_message" />
+<!--            android:onClick="@{()->RegisterViewModel.onClickRegister()}"-->
+<!--            android:visibility="@{RegisterViewModel.isShowRegister ? View.GONE : View.VISIBLE}"-->
 
         <Button
             android:id="@+id/button_login"
@@ -127,8 +127,8 @@
             android:text="To Login"
             app:cornerRadius="50dp"
             app:layout_constraintEnd_toEndOf="parent"
-            android:visibility="@{RegisterViewModel.isShowToLogin ? View.VISIBLE : View.GONE}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_message" />
+<!--            android:visibility="@{RegisterViewModel.isShowToLogin ? View.VISIBLE : View.GONE}"-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
