@@ -33,8 +33,6 @@
         <activity android:name=".FoodDetails" />
         <activity android:name=".PayActivity" />
         <activity android:name=".PageActivity" />
-        <activity android:name=".FinishActivity" />
-        <activity android:name=".CartActivity" />
         <activity android:name=".RegisterActivity" />
     </application>
 

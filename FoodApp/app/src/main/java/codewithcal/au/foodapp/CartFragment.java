@@ -20,14 +20,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-import codewithcal.au.foodapp.adapter.DetailBillAdapter;
+import codewithcal.au.foodapp.adapter.PayDetailBillAdapter;
 import codewithcal.au.foodapp.model.DetailBill;
 import codewithcal.au.foodapp.sqlite.DatabaseHandler;
 
 public class CartFragment extends Fragment {
     private ArrayList<DetailBill> arrayList;
     private RecyclerView rcvCart;
-    private DetailBillAdapter detailBillAdapter;
+    private PayDetailBillAdapter detailBillAdapter;
     private DatabaseHandler db;
     private int idDelete;
     private FloatingActionButton btnPay;
@@ -47,8 +47,7 @@ public class CartFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_cart, container, false);
     }
 
@@ -56,7 +55,7 @@ public class CartFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         db = new DatabaseHandler(getContext());
         getAllBills();
-        detailBillAdapter = new DetailBillAdapter(getContext(), arrayList, new DetailBillAdapter.ClickListeners() {
+        detailBillAdapter = new PayDetailBillAdapter(getContext(), arrayList, new PayDetailBillAdapter.ClickListeners() {
             @Override
             public void onItemClick(int position, View v) {
 

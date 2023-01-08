@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,7 +27,7 @@ import codewithcal.au.foodapp.model.DetailBill;
 import codewithcal.au.foodapp.sqlite.DatabaseHandler;
 
 public class ItemListDialogFragment extends BottomSheetDialogFragment {
-    String id;
+    private String id;
     private ArrayList<DetailBill> arrayList;
     private BottomDetailBillAdapter bottomDetailBillAdapter;
     private DatabaseHandler db;
@@ -49,8 +50,7 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentItemListDialogListDialogBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -69,11 +69,11 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment {
             public void onItemLongClick(int position, View v) {
                 rcvCart = view.findViewById(R.id.all_bill_recycler);
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-                alertDialog.setTitle("Bạn có chắc muốn xóa");
+                alertDialog.setTitle("Do you want to delete this item?");
                 alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
                 //alertDialog.setMessage(selectedValue);
                 idDelete = arrayList.get(position).getId();
-                alertDialog.setNegativeButton("Xóa", new DialogInterface.OnClickListener() {
+                alertDialog.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         DetailBill x = arrayList.get(position);
                         db.deleteDetailBill(idDelete);
@@ -81,7 +81,7 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment {
                         bottomDetailBillAdapter.notifyDataSetChanged();
                     }
                 });
-                alertDialog.setPositiveButton("Thoát", new DialogInterface.OnClickListener() {
+                alertDialog.setPositiveButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         //alertDialog.dismiss();
                     }

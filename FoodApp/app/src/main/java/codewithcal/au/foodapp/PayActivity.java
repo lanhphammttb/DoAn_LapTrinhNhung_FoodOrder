@@ -37,12 +37,13 @@ public class PayActivity extends AppCompatActivity {
     private PayDetailBillAdapter payDetailBillAdapter;
     private DatabaseHandler db;
     private int idDelete;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay);
         getSupportActionBar().setTitle(getString(R.string.pay));
+
+        initView();
 
         apiInterface = RetrofitClient.getRetrofitInstance().create(ApiInterface.class);
         db = new DatabaseHandler(this);
@@ -55,7 +56,6 @@ public class PayActivity extends AppCompatActivity {
 
             @Override
             public void onItemLongClick(int position, View v) {
-                rcvPay = findViewById(R.id.all_bill_pay_recycler);
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(PayActivity.this);
                 alertDialog.setTitle("Bạn có chắc muốn xóa");
                 alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
@@ -77,23 +77,25 @@ public class PayActivity extends AppCompatActivity {
                 alertDialog.show();
             }
         });
-        itemId = findViewById(R.id.tv_user_info_pay);
         Intent intent = getIntent();
         idUser = intent.getStringExtra("id");
         itemId.setText(idUser);
 
-        rcvPay = findViewById(R.id.all_bill_pay_recycler);
         rcvPay.setAdapter(payDetailBillAdapter);
         rcvPay.addItemDecoration(new DividerItemDecoration(rcvPay.getContext(), DividerItemDecoration.VERTICAL));
         rcvPay.setLayoutManager(new LinearLayoutManager(this));
-        btnOrder = findViewById(R.id.btn_order);
         btnOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 postBills();
             }
         });
+    }
 
+    private void initView() {
+        rcvPay = findViewById(R.id.all_bill_pay_recycler);
+        itemId = findViewById(R.id.tv_user_info_pay);
+        btnOrder = findViewById(R.id.btn_order);
     }
 
     private void getAllBills() {
@@ -115,10 +117,8 @@ public class PayActivity extends AppCompatActivity {
             call.enqueue(new Callback<Bill>() {
                 @Override
                 public void onResponse(Call<Bill> call, Response<Bill> response) {
-                    Toast.makeText(PayActivity.this, "OK NHA", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PayActivity.this, "Order " + detailBill.getName() + " success", Toast.LENGTH_SHORT).show();
                     db.dropTableDetailBill();
-                    Intent i = new Intent(PayActivity.this, FinishActivity.class);
-                    startActivity(i);
                 }
 
                 @Override
@@ -127,5 +127,7 @@ public class PayActivity extends AppCompatActivity {
                 }
             });
         }
+        Intent intent = new Intent(PayActivity.this, PageActivity.class);
+        startActivity(intent);
     }
 }

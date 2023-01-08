@@ -7,31 +7,39 @@ public class Food {
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("imageUrl")
+    @Expose
+    private String imageUrl;
+    @SerializedName("rating")
+    @Expose
+    private String rating;
+    @SerializedName("deliveryTime")
+    @Expose
+    private String deliveryTime;
+    @SerializedName("deliveryCharges")
+    @Expose
+    private String deliveryCharges;
     @SerializedName("price")
     @Expose
     private String price;
-    @SerializedName("type")
+    @SerializedName("note")
     @Expose
-    private String type;
+    private String note;
     @SerializedName("id")
     @Expose
     private int id;
+
     public Food() {
     }
 
-    public Food(int id, String name, String price, String type) {
-        this.id = id;
+    public Food(String name, String imageUrl, String rating, String deliveryTime, String deliveryCharges, String price, String note, int id) {
         this.name = name;
+        this.imageUrl = imageUrl;
+        this.rating = rating;
+        this.deliveryTime = deliveryTime;
+        this.deliveryCharges = deliveryCharges;
         this.price = price;
-        this.type = type;
-    }
-
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
+        this.note = note;
         this.id = id;
     }
 
@@ -43,6 +51,38 @@ public class Food {
         this.name = name;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
+    public String getDeliveryTime() {
+        return deliveryTime;
+    }
+
+    public void setDeliveryTime(String deliveryTime) {
+        this.deliveryTime = deliveryTime;
+    }
+
+    public String getDeliveryCharges() {
+        return deliveryCharges;
+    }
+
+    public void setDeliveryCharges(String deliveryCharges) {
+        this.deliveryCharges = deliveryCharges;
+    }
+
     public String getPrice() {
         return price;
     }
@@ -51,12 +91,19 @@ public class Food {
         this.price = price;
     }
 
-    public String getType() {
-        return type;
+    public String getNote() {
+        return note;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setNote(String note) {
+        this.note = note;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

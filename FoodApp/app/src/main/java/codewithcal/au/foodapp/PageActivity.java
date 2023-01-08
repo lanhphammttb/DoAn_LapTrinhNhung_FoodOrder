@@ -27,7 +27,7 @@ public class PageActivity extends AppCompatActivity {
     ProfileFragment profileFragment = new ProfileFragment();
     private ArrayList<DetailBill> arrayList;
     private DatabaseHandler db;
-    private ActivityPageBinding binding;
+    private ActivityPageBinding activityPageBinding;
     private String ids;
     private User mUser;
 
@@ -36,8 +36,9 @@ public class PageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_page);
         db = new DatabaseHandler(this);
-        tvUserId = findViewById(R.id.tv_user_id_page);
-        tvUserInfo = findViewById(R.id.tv_user_info_page);
+
+        initView();
+
         Bundle bundleReceive = getIntent().getExtras();
         if (bundleReceive != null) {
             User user = (User) bundleReceive.get("obj_account");
@@ -48,8 +49,6 @@ public class PageActivity extends AppCompatActivity {
                 mUser = user;
             }
         }
-
-        bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
 
@@ -77,6 +76,12 @@ public class PageActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void initView() {
+        tvUserId = findViewById(R.id.tv_user_id_page);
+        tvUserInfo = findViewById(R.id.tv_user_info_page);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
     }
 
     private int getCountFoodInCart() {
