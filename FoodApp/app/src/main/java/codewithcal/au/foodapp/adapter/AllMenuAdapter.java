@@ -35,12 +35,13 @@ import codewithcal.au.foodapp.model.Food;
 public class AllMenuAdapter extends RecyclerView.Adapter<AllMenuAdapter.AllMenuViewHolder> implements Filterable {
     Context context;
     List<Food> allmenuList;
-    List<Food> foodListFiltered;
+    List<Food> allmenuListOld;
     String id;
 
     public AllMenuAdapter(Context context, List<Food> allmenuList) {
         this.context = context;
         this.allmenuList = allmenuList;
+        this.allmenuListOld = allmenuList;
     }
 
     public AllMenuAdapter(String id) {
@@ -106,25 +107,25 @@ public class AllMenuAdapter extends RecyclerView.Adapter<AllMenuAdapter.AllMenuV
             protected FilterResults performFiltering(CharSequence charSequence) {
                 String charString = charSequence.toString();
                 if (charString.isEmpty()) {
-                    foodListFiltered = allmenuList;
+                    allmenuList = allmenuListOld;
                 } else {
                     List<Food> filteredList = new ArrayList<>();
-                    for (Food row : allmenuList) {
+                    for (Food row : allmenuListOld) {
                         if (row.getName().toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(row);
                         }
                     }
-                    foodListFiltered = filteredList;
+                    allmenuList = filteredList;
                 }
 
                 FilterResults filterResults = new FilterResults();
-                filterResults.values = foodListFiltered;
+                filterResults.values = allmenuList;
                 return filterResults;
             }
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                foodListFiltered = (ArrayList<Food>) filterResults.values;
+                allmenuList = (ArrayList<Food>) filterResults.values;
                 // refresh the list with filtered data
                 notifyDataSetChanged();
             }
