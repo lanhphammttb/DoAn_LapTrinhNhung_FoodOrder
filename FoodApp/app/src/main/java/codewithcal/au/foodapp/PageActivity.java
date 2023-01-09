@@ -3,6 +3,7 @@ package codewithcal.au.foodapp;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import codewithcal.au.foodapp.sqlite.DatabaseHandler;
 public class PageActivity extends AppCompatActivity {
     TextView tvUserId;
     TextView tvUserInfo;
+    ImageView imageProfile;
     BottomNavigationView bottomNavigationView;
     HomeFragment homeFragment = new HomeFragment();
     CartFragment cartFragment = new CartFragment();
@@ -82,6 +84,7 @@ public class PageActivity extends AppCompatActivity {
         tvUserId = findViewById(R.id.tv_user_id_page);
         tvUserInfo = findViewById(R.id.tv_user_info_page);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
+        imageProfile = findViewById(R.id.profile_image);
     }
 
     private int getCountFoodInCart() {

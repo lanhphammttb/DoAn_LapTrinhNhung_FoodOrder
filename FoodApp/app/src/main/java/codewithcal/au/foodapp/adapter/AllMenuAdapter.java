@@ -8,18 +8,22 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import codewithcal.au.foodapp.FoodDetails;
@@ -28,9 +32,10 @@ import codewithcal.au.foodapp.ItemListDialogFragment;
 import codewithcal.au.foodapp.R;
 import codewithcal.au.foodapp.model.Food;
 
-public class AllMenuAdapter extends RecyclerView.Adapter<AllMenuAdapter.AllMenuViewHolder> {
+public class AllMenuAdapter extends RecyclerView.Adapter<AllMenuAdapter.AllMenuViewHolder> implements Filterable {
     Context context;
     List<Food> allmenuList;
+    List<Food> foodListFiltered;
     String id;
 
     public AllMenuAdapter(Context context, List<Food> allmenuList) {
@@ -76,6 +81,15 @@ public class AllMenuAdapter extends RecyclerView.Adapter<AllMenuAdapter.AllMenuV
                 context.startActivity(i);
             }
         });
+
+        holder.nameFood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ItemListDialogFragment item = new ItemListDialogFragment();
+                AppCompatActivity activity = (AppCompatActivity) context;
+                item.show(activity.getSupportFragmentManager(), "itemListDialogFragment");
+            }
+        });
     }
 
     @Override
@@ -85,6 +99,37 @@ public class AllMenuAdapter extends RecyclerView.Adapter<AllMenuAdapter.AllMenuV
         } else return 0;
     }
 
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    foodListFiltered = allmenuList;
+                } else {
+                    List<Food> filteredList = new ArrayList<>();
+                    for (Food row : allmenuList) {
+                        if (row.getName().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(row);
+                        }
+                    }
+                    foodListFiltered = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = foodListFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                foodListFiltered = (ArrayList<Food>) filterResults.values;
+                // refresh the list with filtered data
+                notifyDataSetChanged();
+            }
+        };
+    }
     public static class AllMenuViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView idFood, nameFood, noteFood, ratingFood, timeFood, chargesfood,  priceFood;
@@ -102,4 +147,5 @@ public class AllMenuAdapter extends RecyclerView.Adapter<AllMenuAdapter.AllMenuV
             priceFood = itemView.findViewById(R.id.price_food);
         }
     }
+
 }

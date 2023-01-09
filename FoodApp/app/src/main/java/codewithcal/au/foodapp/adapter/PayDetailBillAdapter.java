@@ -73,6 +73,8 @@ public class PayDetailBillAdapter extends RecyclerView.Adapter<PayDetailBillAdap
                     DetailBill f = db.getDetailBill(ids);
                     if (f.getQuantity() == 1) {
                         db.deleteDetailBill(ids);
+                        arrayList.remove(arrayList.get(position));
+                        notifyDataSetChanged();
                     } else {
                         DetailBill d = new DetailBill(ids, f.getName(), f.getQuantity() - 1);
                         db.updateDetailBill(d);
