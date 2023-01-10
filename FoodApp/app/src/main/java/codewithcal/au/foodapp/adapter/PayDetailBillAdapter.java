@@ -8,23 +8,32 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import codewithcal.au.foodapp.R;
 import codewithcal.au.foodapp.model.DetailBill;
+import codewithcal.au.foodapp.model.Food;
+import codewithcal.au.foodapp.retrofit.ApiInterface;
+import codewithcal.au.foodapp.retrofit.RetrofitClient;
 import codewithcal.au.foodapp.sqlite.DatabaseHandler;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class PayDetailBillAdapter extends RecyclerView.Adapter<PayDetailBillAdapter.MyViewHolder> {
+    private List<Food> allmenuList;
+    private Food mFood;
     private final ArrayList<DetailBill> arrayList;
     private final Context context;
     private final ClickListeners clickListeners;
     private DatabaseHandler db;
-    private PayDetailBillAdapter payDetailBillAdapter;
 
     public PayDetailBillAdapter(Context context, ArrayList<DetailBill> arrayList, ClickListeners clickListeners) {
         this.arrayList = arrayList;
@@ -47,6 +56,27 @@ public class PayDetailBillAdapter extends RecyclerView.Adapter<PayDetailBillAdap
         holder.id.setText(String.valueOf(arrayList.get(position).getId()));
         holder.name.setText(detailBill.getName());
         holder.quantity.setText(Integer.toString(detailBill.getQuantity()));
+
+//        ApiInterface apiInterface = RetrofitClient.getRetrofitInstance().create(ApiInterface.class);
+//        Call<List<Food>> call = apiInterface.getAllData();
+//        call.enqueue(new Callback<List<Food>>() {
+//            @Override
+//            public void onResponse(Call<List<Food>> call, Response<List<Food>> response) {
+//                allmenuList = response.body();
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Food>> call, Throwable t) {
+//            }
+//        });
+
+//        for(Food food : allmenuList){
+//            if(arrayList.get(position).getId() == food.getId()){
+//                mFood = food;
+//                holder.price.setText(mFood.getPrice());
+//            }
+//        }
+
         holder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,7 +86,7 @@ public class PayDetailBillAdapter extends RecyclerView.Adapter<PayDetailBillAdap
                     DetailBill f = db.getDetailBill(ida);
                     DetailBill d = new DetailBill(ida, f.getName(), f.getQuantity() + 1);
                     db.updateDetailBill(d);
-                    holder.quantity.setText(Integer.toString(f.getQuantity()));
+                    holder.quantity.setText(Integer.toString(d.getQuantity()));
                     //notifyItemChanged(holder.getBindingAdapterPosition());
                 } catch (Exception ex) {
                     Log.e("Add food to cart", ex.getMessage());

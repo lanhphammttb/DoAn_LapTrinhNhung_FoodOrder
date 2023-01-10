@@ -6,10 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".HomeFragment">
     <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         app:cardCornerRadius="30dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="80dp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp">
         <com.google.android.material.appbar.AppBarLayout
@@ -35,15 +36,16 @@
 
             <TextView
                 android:id="@+id/tv_user_info"
-                android:layout_width="254dp"
+                android:layout_width="wrap_content"
+                android:text="Hello world"
                 android:layout_height="34dp"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="120dp"
+                android:layout_marginTop="20dp"
                 android:fontFamily="@font/open_sans_bold"
                 android:textColor="@color/orange"
-                android:textSize="16sp"
+                android:textSize="32sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@id/tv_user_info_id" />
 
             <TextView
                 android:id="@+id/tv_user_info_id"
@@ -58,36 +60,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_user_info" />
 
-            <EditText
-                android:id="@+id/editText"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="56dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/search_bg"
-                android:drawableLeft="@drawable/ic_search_black_24dp"
-                android:drawablePadding="16dp"
-                android:ems="10"
-                android:hint="Search..."
-                android:inputType="textPersonName"
-                android:paddingStart="16dp"
-                android:singleLine="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_user_info"
-                android:visibility="gone"/>
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/all_menu_recycler"
-                android:layout_width="0dp"
-                android:layout_height="500dp"
-                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="580dp"
+                android:layout_marginTop="100dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editText"
+                app:layout_constraintTop_toBottomOf="@+id/tv_user_info"
                 tools:listitem="@layout/food_recycler_items" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

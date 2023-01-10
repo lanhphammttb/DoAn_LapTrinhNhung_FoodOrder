@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,13 +31,15 @@ import codewithcal.au.foodapp.FoodDetails;
 import codewithcal.au.foodapp.HomeFragment;
 import codewithcal.au.foodapp.ItemListDialogFragment;
 import codewithcal.au.foodapp.R;
+import codewithcal.au.foodapp.model.DetailBill;
 import codewithcal.au.foodapp.model.Food;
+import codewithcal.au.foodapp.sqlite.DatabaseHandler;
 
 public class AllMenuAdapter extends RecyclerView.Adapter<AllMenuAdapter.AllMenuViewHolder> implements Filterable {
     Context context;
     List<Food> allmenuList;
     List<Food> allmenuListOld;
-    String id;
+    int id;
 
     public AllMenuAdapter(Context context, List<Food> allmenuList) {
         this.context = context;
@@ -44,7 +47,7 @@ public class AllMenuAdapter extends RecyclerView.Adapter<AllMenuAdapter.AllMenuV
         this.allmenuListOld = allmenuList;
     }
 
-    public AllMenuAdapter(String id) {
+    public AllMenuAdapter(int id) {
         this.id = id;
     }
 
@@ -86,6 +89,14 @@ public class AllMenuAdapter extends RecyclerView.Adapter<AllMenuAdapter.AllMenuV
         holder.nameFood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                try {
+                    //Lưu vào sqlite
+                    DatabaseHandler db = new DatabaseHandler(v.getContext());
+                    DetailBill f = new DetailBill(allmenuList.get(position).getId(), allmenuList.get(position).getName(), 1);
+                    db.addDetailBill(f);
+                } catch (Exception ex) {
+                    Log.e("Add food to cart", ex.getMessage());
+                }
                 ItemListDialogFragment item = new ItemListDialogFragment();
                 AppCompatActivity activity = (AppCompatActivity) context;
                 item.show(activity.getSupportFragmentManager(), "itemListDialogFragment");

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -43,7 +44,9 @@ public class HomeFragment extends Fragment {
 
     List<Food> allmenuList;
 
-    String id;
+    int id;
+
+    String name;
 
     private MenuItem menuItem;
 
@@ -51,10 +54,13 @@ public class HomeFragment extends Fragment {
 
     private Toolbar toolbar;
 
-    public static HomeFragment getInstance(String id) {
+    TextView tvUserInfo;
+
+    public static HomeFragment getInstance(int id, String name) {
         HomeFragment homeFragment = new HomeFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("user_id", id);
+        bundle.putSerializable("user_name", name);
         homeFragment.setArguments(bundle);
         return homeFragment;
     }
@@ -91,14 +97,17 @@ public class HomeFragment extends Fragment {
         allMenuRecyclerView.addItemDecoration(itemDecoration);
 
         allmenuList = new ArrayList<>();
-        callApiGetUsers();
+        callApiGetFoods();
         if (getArguments() != null) {
-            this.id = getArguments().getString("user_id");
+            this.id = getArguments().getInt("user_id");
+            this.name = getArguments().getString("user_name");
         }
         AllMenuAdapter idAdapter;
         idAdapter = new AllMenuAdapter(id);
+        tvUserInfo = view.findViewById(R.id.tv_user_info);
+        tvUserInfo.setText("Hi " + name);
     }
-    private void callApiGetUsers() {
+    private void callApiGetFoods() {
         Call<List<Food>> call = apiInterface.getAllData();
         call.enqueue(new Callback<List<Food>>() {
             @Override

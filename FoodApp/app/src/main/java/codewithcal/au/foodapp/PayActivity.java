@@ -127,7 +127,8 @@ public class PayActivity extends AppCompatActivity {
                 }
             });
         }
-        Intent intent = new Intent(PayActivity.this, PageActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(PayActivity.this, PageActivity.class);
+//        startActivity(intent);
+        finish();
     }
 }

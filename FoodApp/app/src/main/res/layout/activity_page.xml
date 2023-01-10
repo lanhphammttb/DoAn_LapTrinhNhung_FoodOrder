@@ -20,6 +20,7 @@
         android:layout_above="@id/bottom_navigation" >
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/tv_user_info_page"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,7 +37,8 @@
             android:src="@drawable/profile"
             app:civ_border_color="#FF000000"
             app:civ_border_width="2dp"
-            app:srcCompat="@drawable/login" />
+            app:srcCompat="@drawable/login"
+            android:visibility="gone"/>
     </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
