@@ -104,28 +104,27 @@ public class CartFragment extends Fragment {
             }
         });
 
-        ArrayList<String> list = db.getTotalPrice();
-        ArrayList<Integer> numbers = new ArrayList<Integer>();
-        for(int i = 0; i < list.size(); i++) {
-            numbers.add(Integer.parseInt(list.get(i)));
-        }
-
-        int sum = 0;
-        for(int i = 0; i < numbers.size(); i++) {
-            sum += numbers.get(i);
-        }
-
         toolbar = view.findViewById(R.id.toolbar_total_price);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
         //activity.getSupportActionBar().setTitle("Total price: " + sum + " VNĐ");
         tvTotalPrice = view.findViewById(R.id.tv_total_price);
-        if(sum==0){
-            tvTotalPrice.setText("Total price: " + "0" + " VNĐ");
-        }else{
+
+        ArrayList<String> list = db.getTotalPrice();
+        ArrayList<Integer> numbers = new ArrayList<Integer>();
+        if(list.isEmpty() || list == null || list.get(0) == null){
+            tvTotalPrice.setText("Total price: 0 VNĐ");
+        }
+        else if (list.size() >= 1){
+            for(int i = 0; i < list.size(); i++) {
+                numbers.add(Integer.parseInt(list.get(i)));
+            }
+            int sum = 0;
+            for(int i = 0; i < numbers.size(); i++) {
+                sum += numbers.get(i);
+            }
             tvTotalPrice.setText("Total price: " + String.valueOf(sum) + " VNĐ");
         }
-
     }
 
     private void getAllBills() {

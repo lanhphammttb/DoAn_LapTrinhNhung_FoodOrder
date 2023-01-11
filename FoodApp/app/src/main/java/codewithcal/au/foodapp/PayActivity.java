@@ -94,20 +94,19 @@ public class PayActivity extends AppCompatActivity {
 
         ArrayList<String> list = db.getTotalPrice();
         ArrayList<Integer> numbers = new ArrayList<Integer>();
-        for(int i = 0; i < list.size(); i++) {
-            numbers.add(Integer.parseInt(list.get(i)));
-        }
-
-        int sum = 0;
-        for(int i = 0; i < numbers.size(); i++) {
-            sum += numbers.get(i);
-        }
-        if(sum==0){
+        if(list.isEmpty() || list == null || list.get(0) == null){
             tvTotalPrice.setText("Total price: " + "0" + " VNĐ");
-        }else{
-            tvTotalPrice.setText("Total price: " + String.valueOf(sum) + " VNĐ");
         }
-
+        else if (list.size() >= 1){
+            for(int i = 0; i < list.size(); i++) {
+                numbers.add(Integer.parseInt(list.get(i)));
+            }
+            int sum = 0;
+                for(int i = 0; i < numbers.size(); i++) {
+                    sum += numbers.get(i);
+                }
+                tvTotalPrice.setText("Total price: " + String.valueOf(sum) + " VNĐ");
+        }
     }
 
     private void initView() {
