@@ -2,6 +2,7 @@ package codewithcal.au.foodapp;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -64,6 +65,8 @@ public class RegisterViewModel extends Observable {
                             @Override
                             public void onResponse(Call<User> post, Response<User> response) {
                                 showToast("Create account success");
+                                Intent intent = new Intent(context, LoginActivity.class);
+                                context.startActivity(intent);
                             }
 
                             @Override

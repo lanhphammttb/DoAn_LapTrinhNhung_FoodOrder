@@ -67,19 +67,11 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void ClickRegister() {
         Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-        Bundle bundle = new Bundle();
-        User user = new User(email, password);
-        bundle.putSerializable("account_from_register", user);
-        intent.putExtras(bundle);
         startActivity(intent);
     }
 
     private void clickBack() {
         Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-        Bundle bundle = new Bundle();
-        User user = new User(email, password);
-        bundle.putSerializable("account_from_register", user);
-        intent.putExtras(bundle);
         startActivity(intent);
     }
 }
