@@ -9,39 +9,51 @@
     android:layout_marginEnd="4dp"
     android:layout_marginRight="8dp">
 
+    <ImageView
+        android:id="@+id/image_cart"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/popular1" />
 
     <TextView
         android:id="@+id/name_cart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:layout_marginLeft="30dp"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:textSize="24sp"
+        android:text="Hamburger"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toRightOf="@+id/image_cart"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/quantity_cart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/name_cart"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="Quantity: 10"
+        app:layout_constraintLeft_toRightOf="@id/image_cart"
         app:layout_constraintTop_toBottomOf="@+id/name_cart" />
 
     <TextView
         android:id="@+id/price_cart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="144dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="16dp"
+        android:layout_marginLeft="10dp"
         android:fontFamily="@font/open_sans_bold"
-        android:text="haha"
+        android:text="Total price: 100.000 VNĐ"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintLeft_toRightOf="@id/image_cart"
+        app:layout_constraintTop_toBottomOf="@id/quantity_cart"/>
 
     <TextView
         android:id="@+id/id_bill"

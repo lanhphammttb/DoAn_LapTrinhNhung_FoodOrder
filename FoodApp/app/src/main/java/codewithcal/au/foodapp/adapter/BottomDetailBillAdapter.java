@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import codewithcal.au.foodapp.R;
@@ -42,6 +43,9 @@ public class BottomDetailBillAdapter extends RecyclerView.Adapter<BottomDetailBi
         holder.id.setText(ids);
         holder.name.setText(detailBill.getName());
         holder.quantity.setText(Integer.toString(detailBill.getQuantity()));
+        int pricet = arrayList.get(position).getPrice();
+        DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
+        holder.price.setText(decimalFormat.format(pricet) + " đ");
     }
 
     @Override
@@ -53,12 +57,13 @@ public class BottomDetailBillAdapter extends RecyclerView.Adapter<BottomDetailBi
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-        TextView id, name, quantity;
+        TextView id, name, quantity, price;
         public MyViewHolder(FragmentItemListDialogListDialogItemBinding binding) {
             super(binding.getRoot());
             id = binding.bottomIdCart;
             name = binding.bottomNameCart;
             quantity = binding.bottomQuantityCart;
+            price = binding.bottomPriceCart;
 
             //dang ky su kien click cho view: cach 2.
             itemView.setOnClickListener(this);
@@ -68,12 +73,12 @@ public class BottomDetailBillAdapter extends RecyclerView.Adapter<BottomDetailBi
 
         @Override
         public void onClick(View v) {
-            clickListeners.onItemClick(getAdapterPosition(),v);//callback forwarding
+            clickListeners.onItemClick(getBindingAdapterPosition(),v);//callback forwarding
         }
 
         @Override
         public boolean onLongClick(View v) {
-            clickListeners.onItemLongClick(getAdapterPosition(),v);
+            clickListeners.onItemLongClick(getBindingAdapterPosition(),v);
             return true;
         }
     }

@@ -5,17 +5,7 @@
     tools:context=".ItemListDialogFragment"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/bottom_btn_pay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="30dp"
-        android:layout_marginBottom="30dp"
-        android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@android:drawable/ic_input_get"
-        tools:ignore="SpeakableTextPresentCheck" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
         android:layout_width="match_parent"
@@ -23,5 +13,7 @@
         android:clipToPadding="false"
         android:paddingTop="@dimen/list_item_spacing_half"
         android:paddingBottom="@dimen/list_item_spacing_half"
+        tools:layout_editor_absoluteX="-16dp"
+        tools:layout_editor_absoluteY="-260dp"
         tools:listitem="@layout/fragment_item_list_dialog_list_dialog_item" />
 </androidx.constraintlayout.widget.ConstraintLayout>

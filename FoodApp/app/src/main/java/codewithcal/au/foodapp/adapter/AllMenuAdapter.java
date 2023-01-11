@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,7 +64,9 @@ public class AllMenuAdapter extends RecyclerView.Adapter<AllMenuAdapter.AllMenuV
     public void onBindViewHolder(@NonNull AllMenuViewHolder holder, int position) {
         holder.idFood.setText(String.valueOf(allmenuList.get(position).getId()));
         holder.nameFood.setText(allmenuList.get(position).getName());
-        holder.priceFood.setText(allmenuList.get(position).getPrice() + " đ");
+        int pricet = Integer.parseInt(allmenuList.get(position).getPrice());
+        DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
+        holder.priceFood.setText(decimalFormat.format(pricet) + " đ");
         holder.timeFood.setText(allmenuList.get(position).getDeliveryTime());
         holder.ratingFood.setText(allmenuList.get(position).getRating());
         holder.chargesfood.setText(allmenuList.get(position).getDeliveryCharges());
@@ -92,7 +95,9 @@ public class AllMenuAdapter extends RecyclerView.Adapter<AllMenuAdapter.AllMenuV
                 try {
                     //Lưu vào sqlite
                     DatabaseHandler db = new DatabaseHandler(v.getContext());
-                    DetailBill f = new DetailBill(allmenuList.get(position).getId(), allmenuList.get(position).getName(), 1);
+                    int price = Integer.parseInt(allmenuList.get(position).getPrice());
+                    DetailBill f = new DetailBill(allmenuList.get(position).getId(),
+                            allmenuList.get(position).getName(), 1, price);
                     db.addDetailBill(f);
                 } catch (Exception ex) {
                     Log.e("Add food to cart", ex.getMessage());

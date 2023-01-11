@@ -6,11 +6,14 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -53,12 +56,17 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewHolder
         Bill bill = allmenuList.get(position);
         //String idFoods = String.valueOf(allmenuList.get(position).getId());
         holder.idBill.setText(String.valueOf(allmenuList.get(position).getId()));
-        holder.quantity.setText(String.valueOf(allmenuList.get(position).getQuantity()));
+        holder.quantity.setText("Quantity: " + String.valueOf(allmenuList.get(position).getQuantity()));
         holder.food.setText(String.valueOf(getFoodName(allmenuList.get(position).getFoodId())));
         int totalPrice = Integer.parseInt(getFoodPrice(bill.getFoodId())) * bill.getQuantity();
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
 
-        holder.price.setText(decimalFormat.format(totalPrice) + " VNĐ");
+        holder.price.setText("Total price: " + decimalFormat.format(totalPrice) + " VNĐ");
+
+        //Glide.with(context).load(allmenuList.get(position).getImageUrl()).into(holder.imageFood);
+
+        Glide.with(context).load(getFoodImageUrl(allmenuList.get(position).getFoodId())).into(holder.imageFood);
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,6 +92,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewHolder
     public static class BillViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView idBill, quantity, food, price;
+        private final ImageView imageFood;
 
         public BillViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -91,7 +100,18 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewHolder
             quantity = itemView.findViewById(R.id.quantity_cart);
             food = itemView.findViewById(R.id.name_cart);
             price = itemView.findViewById(R.id.price_cart);
+            imageFood = itemView.findViewById(R.id.image_cart);
         }
+    }
+
+    private String getFoodImageUrl(int id) {
+        String imageUrl = null;
+        for (Food food : foodList) {
+            if (id == food.getId()) {
+                imageUrl= food.getImageUrl();
+            }
+        }
+        return imageUrl;
     }
 
     private String getFoodName(int id) {

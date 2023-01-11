@@ -28,7 +28,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PayActivity extends AppCompatActivity {
-    TextView itemId;
+    TextView itemId, tvTotalPrice;
     String idUser;
     Button btnOrder;
     ApiInterface apiInterface;
@@ -91,12 +91,27 @@ public class PayActivity extends AppCompatActivity {
                 postBills();
             }
         });
+
+        ArrayList<String> list = db.getTotalPrice();
+        ArrayList<Integer> numbers = new ArrayList<Integer>();
+        for(int i = 0; i < list.size(); i++) {
+            numbers.add(Integer.parseInt(list.get(i)));
+        }
+
+        int sum = 0;
+        for(int i = 0; i < numbers.size(); i++) {
+            sum += numbers.get(i);
+        }
+
+        tvTotalPrice.setText("Total price: " + String.valueOf(sum) + " VNĐ");
+
     }
 
     private void initView() {
         rcvPay = findViewById(R.id.all_bill_pay_recycler);
         itemId = findViewById(R.id.tv_user_info_pay);
         btnOrder = findViewById(R.id.btn_order);
+        tvTotalPrice = findViewById(R.id.tv_total_price_pay);
     }
 
     private void getAllBills() {

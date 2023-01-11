@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 
+import java.text.DecimalFormat;
+
 import codewithcal.au.foodapp.model.DetailBill;
 import codewithcal.au.foodapp.sqlite.DatabaseHandler;
 
@@ -54,7 +56,9 @@ public class FoodDetails extends AppCompatActivity {
         Glide.with(getApplicationContext()).load(imageUrl).into(imageView);
         itemId.setText(id);
         itemName.setText(name);
-        itemPrice.setText(price + " đ");
+        int pricet = Integer.parseInt(price);
+        DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
+        itemPrice.setText(decimalFormat.format(pricet) + " đ");
         itemRating.setText(rating);
         itemNote.setText(note);
         ratingBar.setRating(Float.parseFloat(rating));
@@ -78,10 +82,11 @@ public class FoodDetails extends AppCompatActivity {
     private void ClickAdd() {
         String idt = itemId.getText().toString();
         int id = Integer.parseInt(idt);
+        int pricet = Integer.parseInt(price);
         String name = itemName.getText().toString();
         try {
             //Lưu vào sqlite
-            DetailBill f = new DetailBill(id, name, 1);
+            DetailBill f = new DetailBill(id, name, 1, pricet);
             db.addDetailBill(f);
             ItemListDialogFragment item = new ItemListDialogFragment();
             item.show(getSupportFragmentManager(), "itemListDialogFragment");

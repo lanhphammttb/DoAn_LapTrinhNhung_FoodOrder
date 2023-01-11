@@ -7,10 +7,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,7 +35,8 @@ public class CartFragment extends Fragment {
     private int idDelete;
     private FloatingActionButton btnPay;
     private String id;
-
+    private Toolbar toolbar;
+    private TextView tvTotalPrice;
     public static CartFragment getInstance(String id) {
         CartFragment cartFragment = new CartFragment();
         Bundle bundle = new Bundle();
@@ -99,6 +103,25 @@ public class CartFragment extends Fragment {
                 onClickPay();
             }
         });
+
+        ArrayList<String> list = db.getTotalPrice();
+        ArrayList<Integer> numbers = new ArrayList<Integer>();
+        for(int i = 0; i < list.size(); i++) {
+            numbers.add(Integer.parseInt(list.get(i)));
+        }
+
+        int sum = 0;
+        for(int i = 0; i < numbers.size(); i++) {
+            sum += numbers.get(i);
+        }
+
+        toolbar = view.findViewById(R.id.toolbar_total_price);
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar(toolbar);
+        //activity.getSupportActionBar().setTitle("Total price: " + sum + " VNĐ");
+        tvTotalPrice = view.findViewById(R.id.tv_total_price);
+        tvTotalPrice.setText("Total price: " + String.valueOf(sum) + " VNĐ");
+
     }
 
     private void getAllBills() {

@@ -12,11 +12,11 @@
 
     <TextView
         android:id="@+id/name_pay"
-        android:layout_width="200dp"
-        android:layout_height="39dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="30dp"
-        android:text="Name"
+        android:text="Hamburger"
         android:textSize="20sp"
         android:fontFamily="@font/open_sans_bold"
         android:textColor="@color/black"
@@ -39,10 +39,10 @@
         android:id="@+id/price_pay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="44dp"
+        android:layout_marginLeft="30dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
-        android:text="50.000"
+        android:text="50.000 đ"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -54,14 +54,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="144dp"
+        android:layout_marginEnd="200dp"
         android:layout_marginBottom="16dp"
         android:fontFamily="@font/open_sans_bold"
         android:text="haha"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="invisible"/>
 
     <Button
         android:id="@+id/btn_add_pay"
@@ -77,9 +78,10 @@
         android:id="@+id/btn_sub_pay"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginLeft="80dp"
+        android:layout_marginLeft="200dp"
         android:background="@drawable/remove_48px"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/name_pay"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

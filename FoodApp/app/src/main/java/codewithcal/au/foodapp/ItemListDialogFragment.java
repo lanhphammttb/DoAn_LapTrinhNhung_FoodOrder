@@ -34,7 +34,6 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment {
     private FragmentItemListDialogListDialogBinding binding;
     private RecyclerView rcvCart;
     private int idDelete;
-    private FloatingActionButton btnPay;
 
     public static ItemListDialogFragment getInstance(String id) {
         final ItemListDialogFragment fragment = new ItemListDialogFragment();
@@ -89,18 +88,11 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment {
                 alertDialog.show();
             }
         });
-        btnPay = view.findViewById(R.id.bottom_btn_pay);
         //btnPay = binding.bottomBtnPay;
         RecyclerView rcvCart = view.findViewById(R.id.list);
         rcvCart.setAdapter(bottomDetailBillAdapter);
         rcvCart.addItemDecoration(new DividerItemDecoration(rcvCart.getContext(), DividerItemDecoration.VERTICAL));
         rcvCart.setLayoutManager(new LinearLayoutManager(getContext()));
-        btnPay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickPay();
-            }
-        });
     }
 
     @Override

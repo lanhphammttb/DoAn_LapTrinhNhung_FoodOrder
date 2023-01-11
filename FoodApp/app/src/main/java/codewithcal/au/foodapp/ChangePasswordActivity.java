@@ -61,7 +61,8 @@ public class ChangePasswordActivity extends AppCompatActivity {
     }
 
     private void putUser() {
-        if(edOldPass.getText().equals(mUser.getPassword())){
+        String oldpass = edOldPass.getText().toString();
+        if(oldpass.equals(mUser.getPassword())){
             newpass = edNewPass.getText().toString().trim();
             User userChange = new User(mUser.getId(), mUser.getUsername(), mUser.getEmail(), newpass);
             Call<User> call = apiInterface.updateUser(mUser.getId(), userChange);

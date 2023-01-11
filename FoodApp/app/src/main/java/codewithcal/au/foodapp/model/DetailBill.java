@@ -4,21 +4,19 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class DetailBill {
-    @SerializedName("id")
-    @Expose
     private int id;
-    @SerializedName("name")
-    @Expose
     private String name;
     private int quantity;
+    private int price;
 
     public DetailBill() {
     }
 
-    public DetailBill(int id, String name, int quantity) {
+    public DetailBill(int id, String name, int quantity, int price) {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
+        this.price = price;
     }
 
     public int getId() {
@@ -45,4 +43,11 @@ public class DetailBill {
         this.quantity = quantity;
     }
 
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
 }

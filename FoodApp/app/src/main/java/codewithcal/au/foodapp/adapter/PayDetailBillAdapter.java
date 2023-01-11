@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,8 +31,6 @@ import retrofit2.Response;
 
 
 public class PayDetailBillAdapter extends RecyclerView.Adapter<PayDetailBillAdapter.MyViewHolder> {
-    private List<Food> allmenuList;
-    private Food mFood;
     private final ArrayList<DetailBill> arrayList;
     private final Context context;
     private final ClickListeners clickListeners;
@@ -57,6 +56,10 @@ public class PayDetailBillAdapter extends RecyclerView.Adapter<PayDetailBillAdap
         holder.id.setText(String.valueOf(arrayList.get(position).getId()));
         holder.name.setText(detailBill.getName());
         holder.quantity.setText(Integer.toString(detailBill.getQuantity()));
+        int price = arrayList.get(position).getPrice();
+        DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
+        //holder.price.setText(Integer.toString(detailBill.getPrice()));
+        holder.price.setText(decimalFormat.format(price) + " đ");
         holder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +67,7 @@ public class PayDetailBillAdapter extends RecyclerView.Adapter<PayDetailBillAdap
                     db = new DatabaseHandler(v.getContext());
                     int ida = arrayList.get(position).getId();
                     DetailBill f = db.getDetailBill(ida);
-                    DetailBill d = new DetailBill(ida, f.getName(), f.getQuantity() + 1);
+                    DetailBill d = new DetailBill(ida, f.getName(), f.getQuantity() + 1, f.getPrice());
                     db.updateDetailBill(d);
                     holder.quantity.setText(Integer.toString(d.getQuantity()));
                     //notifyItemChanged(holder.getBindingAdapterPosition());
@@ -86,7 +89,7 @@ public class PayDetailBillAdapter extends RecyclerView.Adapter<PayDetailBillAdap
                         arrayList.remove(arrayList.get(position));
                         notifyDataSetChanged();
                     } else {
-                        DetailBill d = new DetailBill(ids, f.getName(), f.getQuantity() - 1);
+                        DetailBill d = new DetailBill(ids, f.getName(), f.getQuantity() - 1, f.getPrice());
                         db.updateDetailBill(d);
                         holder.quantity.setText(Integer.toString(d.getQuantity()));
                     }
