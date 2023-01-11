@@ -102,8 +102,11 @@ public class PayActivity extends AppCompatActivity {
         for(int i = 0; i < numbers.size(); i++) {
             sum += numbers.get(i);
         }
-
-        tvTotalPrice.setText("Total price: " + String.valueOf(sum) + " VNĐ");
+        if(sum==0){
+            tvTotalPrice.setText("Total price: " + "0" + " VNĐ");
+        }else{
+            tvTotalPrice.setText("Total price: " + String.valueOf(sum) + " VNĐ");
+        }
 
     }
 

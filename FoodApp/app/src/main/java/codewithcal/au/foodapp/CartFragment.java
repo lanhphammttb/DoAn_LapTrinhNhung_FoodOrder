@@ -120,7 +120,11 @@ public class CartFragment extends Fragment {
         activity.setSupportActionBar(toolbar);
         //activity.getSupportActionBar().setTitle("Total price: " + sum + " VNĐ");
         tvTotalPrice = view.findViewById(R.id.tv_total_price);
-        tvTotalPrice.setText("Total price: " + String.valueOf(sum) + " VNĐ");
+        if(sum==0){
+            tvTotalPrice.setText("Total price: " + "0" + " VNĐ");
+        }else{
+            tvTotalPrice.setText("Total price: " + String.valueOf(sum) + " VNĐ");
+        }
 
     }
 
