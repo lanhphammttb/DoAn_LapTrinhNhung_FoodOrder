@@ -9,8 +9,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,13 +28,14 @@ import java.util.List;
 import codewithcal.au.foodapp.adapter.AllMenuAdapter;
 import codewithcal.au.foodapp.model.Food;
 import codewithcal.au.foodapp.retrofit.ApiInterface;
-import codewithcal.au.foodapp.retrofit.RetrofitClient;
+import codewithcal.au.foodapp.retrofit.ApiInterface2;
+import codewithcal.au.foodapp.retrofit.RetrofitClient2;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
-    ApiInterface apiInterface;
+    ApiInterface2 apiInterface;
 
     RecyclerView allMenuRecyclerView;
 
@@ -85,7 +84,7 @@ public class HomeFragment extends Fragment {
         activity.setSupportActionBar(toolbar);
         setHasOptionsMenu(true);
         //activity.getSupportActionBar().setTitle(" Search...");
-        apiInterface = RetrofitClient.getRetrofitInstance().create(ApiInterface.class);
+        apiInterface = RetrofitClient2.getRetrofitInstance().create(ApiInterface2.class);
 
         allMenuRecyclerView = view.findViewById(R.id.all_menu_recycler);
         allMenuRecyclerView.setHasFixedSize(true);
@@ -98,6 +97,7 @@ public class HomeFragment extends Fragment {
 
         allmenuList = new ArrayList<>();
         callApiGetFoods();
+
         if (getArguments() != null) {
             this.id = getArguments().getInt("user_id");
             this.name = getArguments().getString("user_name");

@@ -12,12 +12,13 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public interface ApiInterface {
 
     //https://63a2dfae471b38b206ff0ad6.mockapi.io/api/v1/food?fbclid=IwAR39n1rANXBg_wi7kur0O2faFkCOasJ5sXBmLl0wI_D8fMUzKZxqqirOtWo
-    @GET("food")
-    Call<List<Food>> getAllData();
+//    @GET("food")
+//    Call<List<Food>> getAllData();
 
     @GET("account")
     Call<List<User>> getUser();
@@ -25,14 +26,11 @@ public interface ApiInterface {
     @GET("bill")
     Call<List<Bill>> getAllBill();
 
-    @GET("food")
-    Call<List<DetailBill>> getFood();
-
     @POST("account")
     Call<User> createUser(@Body User acount);
 
-    @PUT("account")
-    Call<User> updateAccount(@Body User user);
+    @PUT("account/{id}")
+    Call<User> updateUser(@Path("id") int id, @Body User user);
 
     @POST("bill")
     Call<Bill> createBill(@Body Bill bill);

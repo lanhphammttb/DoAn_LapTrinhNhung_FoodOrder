@@ -8,7 +8,7 @@ public class RetrofitClient {
     private static Retrofit retrofit;
     //https://63a2dfae471b38b206ff0ad6.mockapi.io/api/v1/food?fbclid=IwAR39n1rANXBg_wi7kur0O2faFkCOasJ5sXBmLl0wI_D8fMUzKZxqqirOtWo
     //https://localhost:5001/api/food/getall
-    private static final String BASE_URL = "https://63a2dfae471b38b206ff0ad6.mockapi.io/api/v1/";
+    private static final String BASE_URL = "https://63bd9418bc99130c6cf713cd.mockapi.io/api/v1/";
 
     public static Retrofit getRetrofitInstance(){
 

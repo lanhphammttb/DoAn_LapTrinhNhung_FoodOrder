@@ -2,6 +2,7 @@ package codewithcal.au.foodapp.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import codewithcal.au.foodapp.CartFragment;
 import codewithcal.au.foodapp.R;
 import codewithcal.au.foodapp.model.DetailBill;
 import codewithcal.au.foodapp.model.Food;
@@ -52,31 +54,9 @@ public class PayDetailBillAdapter extends RecyclerView.Adapter<PayDetailBillAdap
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         DetailBill detailBill = arrayList.get(position);
-        //String ids = String.valueOf(arrayList.get(position).getId());
         holder.id.setText(String.valueOf(arrayList.get(position).getId()));
         holder.name.setText(detailBill.getName());
         holder.quantity.setText(Integer.toString(detailBill.getQuantity()));
-
-//        ApiInterface apiInterface = RetrofitClient.getRetrofitInstance().create(ApiInterface.class);
-//        Call<List<Food>> call = apiInterface.getAllData();
-//        call.enqueue(new Callback<List<Food>>() {
-//            @Override
-//            public void onResponse(Call<List<Food>> call, Response<List<Food>> response) {
-//                allmenuList = response.body();
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<Food>> call, Throwable t) {
-//            }
-//        });
-
-//        for(Food food : allmenuList){
-//            if(arrayList.get(position).getId() == food.getId()){
-//                mFood = food;
-//                holder.price.setText(mFood.getPrice());
-//            }
-//        }
-
         holder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

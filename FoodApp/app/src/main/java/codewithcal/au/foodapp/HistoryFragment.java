@@ -21,17 +21,21 @@ import codewithcal.au.foodapp.adapter.BillAdapter;
 import codewithcal.au.foodapp.model.Bill;
 import codewithcal.au.foodapp.model.Food;
 import codewithcal.au.foodapp.retrofit.ApiInterface;
+import codewithcal.au.foodapp.retrofit.ApiInterface2;
 import codewithcal.au.foodapp.retrofit.RetrofitClient;
+import codewithcal.au.foodapp.retrofit.RetrofitClient2;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HistoryFragment extends Fragment {
+    ApiInterface2 apiInterface2;
     ApiInterface apiInterface;
 
     RecyclerView allMenuRecyclerView;
 
     BillAdapter billAdapter;
+
     AllMenuAdapter allMenuAdapter;
 
     List<Bill> billList;
@@ -60,7 +64,9 @@ public class HistoryFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         apiInterface = RetrofitClient.getRetrofitInstance().create(ApiInterface.class);
+        apiInterface2 = RetrofitClient2.getRetrofitInstance().create(ApiInterface2.class);
 
         allMenuRecyclerView = view.findViewById(R.id.all_menu_recycler);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -98,7 +104,7 @@ public class HistoryFragment extends Fragment {
     }
 
     private void getAllFood() {
-        Call<List<Food>> call = apiInterface.getAllData();
+        Call<List<Food>> call = apiInterface2.getAllData();
         call.enqueue(new Callback<List<Food>>() {
             @Override
             public void onResponse(Call<List<Food>> call, Response<List<Food>> response) {

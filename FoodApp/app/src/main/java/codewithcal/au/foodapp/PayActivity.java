@@ -37,6 +37,7 @@ public class PayActivity extends AppCompatActivity {
     private PayDetailBillAdapter payDetailBillAdapter;
     private DatabaseHandler db;
     private int idDelete;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
