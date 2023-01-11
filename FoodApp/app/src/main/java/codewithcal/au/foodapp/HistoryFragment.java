@@ -76,8 +76,8 @@ public class HistoryFragment extends Fragment {
         allMenuRecyclerView.addItemDecoration(itemDecoration);
 
         billList = new ArrayList<>();
+        foodList = new ArrayList<>();
         getAllFood();
-        callApiGetUsers();
         if (getArguments() != null) {
             this.id = getArguments().getString("user_id");
         }
@@ -109,6 +109,7 @@ public class HistoryFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Food>> call, Response<List<Food>> response) {
                 foodList = response.body();
+                callApiGetUsers();
             }
 
             @Override

@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import codewithcal.au.foodapp.FoodDetails;
@@ -53,9 +54,11 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewHolder
         //String idFoods = String.valueOf(allmenuList.get(position).getId());
         holder.idBill.setText(String.valueOf(allmenuList.get(position).getId()));
         holder.quantity.setText(String.valueOf(allmenuList.get(position).getQuantity()));
-        holder.food.setText(String.valueOf(allmenuList.get(position).getFoodId()));
-        String foodName = getFoodName(bill.getId());
-        holder.food.setText(foodName);
+        holder.food.setText(String.valueOf(getFoodName(allmenuList.get(position).getFoodId())));
+        int totalPrice = Integer.parseInt(getFoodPrice(bill.getFoodId())) * bill.getQuantity();
+        DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
+
+        holder.price.setText(decimalFormat.format(totalPrice) + " VNĐ");
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,13 +83,14 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewHolder
 
     public static class BillViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView idBill, quantity, food;
+        private final TextView idBill, quantity, food, price;
 
         public BillViewHolder(@NonNull View itemView) {
             super(itemView);
             idBill = itemView.findViewById(R.id.id_bill);
             quantity = itemView.findViewById(R.id.quantity_cart);
             food = itemView.findViewById(R.id.name_cart);
+            price = itemView.findViewById(R.id.price_cart);
         }
     }
 
@@ -98,5 +102,15 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewHolder
             }
         }
         return name;
+    }
+
+    private String getFoodPrice(int id) {
+        String price = null;
+        for (Food food : foodList) {
+            if (id == food.getId()) {
+                price = food.getPrice();
+            }
+        }
+        return price;
     }
 }
