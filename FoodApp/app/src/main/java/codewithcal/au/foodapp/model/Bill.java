@@ -13,6 +13,9 @@ public class Bill {
     @SerializedName("quantity")
     @Expose
     private int quantity;
+    @SerializedName("id")
+    @Expose
+    private int id;
 
     public Bill() {
     }
@@ -21,6 +24,14 @@ public class Bill {
         this.accountId = accountId;
         this.foodId = foodId;
         this.quantity = quantity;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getAccountId() {

@@ -22,6 +22,9 @@ public interface ApiInterface {
     @GET("account")
     Call<List<User>> getUser();
 
+    @GET("bill")
+    Call<List<Bill>> getAllBill();
+
     @GET("food")
     Call<List<DetailBill>> getFood();
 

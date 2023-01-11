@@ -69,6 +69,9 @@ public class PageActivity extends AppCompatActivity {
                     case R.id.item_cart:
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, CartFragment.getInstance(ids)).commit();
                         return true;
+                    case R.id.item_notify:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, HistoryFragment.getInstance(ids)).commit();
+                        return true;
                     case R.id.item_profile:
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, ProfileFragment.getInstance(mUser)).commit();
                         return true;
