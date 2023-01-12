@@ -63,22 +63,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewHolder
 
         holder.price.setText("Total price: " + decimalFormat.format(totalPrice) + " VNĐ");
 
-        //Glide.with(context).load(allmenuList.get(position).getImageUrl()).into(holder.imageFood);
-
         Glide.with(context).load(getFoodImageUrl(allmenuList.get(position).getFoodId())).into(holder.imageFood);
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(context, HistoryFragment.class);
-                //String idFoods = String.valueOf(allmenuList.get(position).getId());
-                i.putExtra("userId", id);
-                i.putExtra("id", String.valueOf(allmenuList.get(position).getId()));
-                i.putExtra("food", allmenuList.get(position).getFoodId());
-                i.putExtra("quantity", allmenuList.get(position).getQuantity());
-                context.startActivity(i);
-            }
-        });
 
     }
 

@@ -60,11 +60,11 @@ public class PayActivity extends AppCompatActivity {
             @Override
             public void onItemLongClick(int position, View v) {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(PayActivity.this);
-                alertDialog.setTitle("Bạn có chắc muốn xóa");
+                alertDialog.setTitle("Do you want to delete this item?");
                 alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
                 //alertDialog.setMessage(selectedValue);
                 idDelete = arrayList.get(position).getId();
-                alertDialog.setNegativeButton("Xóa", new DialogInterface.OnClickListener() {
+                alertDialog.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         DetailBill x = arrayList.get(position);
                         db.deleteDetailBill(idDelete);
@@ -72,7 +72,7 @@ public class PayActivity extends AppCompatActivity {
                         payDetailBillAdapter.notifyDataSetChanged();
                     }
                 });
-                alertDialog.setPositiveButton("Thoát", new DialogInterface.OnClickListener() {
+                alertDialog.setPositiveButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         //alertDialog.dismiss();
                     }

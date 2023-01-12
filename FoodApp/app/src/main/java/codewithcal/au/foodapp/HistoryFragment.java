@@ -39,6 +39,7 @@ public class HistoryFragment extends Fragment {
     AllMenuAdapter allMenuAdapter;
 
     List<Bill> billList;
+    List<Bill> billListInverse;
     List<Food> foodList;
     String id;
 
@@ -91,7 +92,13 @@ public class HistoryFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Bill>> call, Response<List<Bill>> response) {
                 billList = response.body();
-                billAdapter = new BillAdapter(getContext(), billList, foodList);
+                billListInverse = new ArrayList<>();
+                for (int i = billList.size() - 1; i >= 0; i--) {
+
+                    // Append the elements in reverse order
+                    billListInverse.add(billList.get(i));
+                }
+                billAdapter = new BillAdapter(getContext(), billListInverse, foodList);
                 allMenuRecyclerView.setAdapter(billAdapter);
                 billAdapter.notifyDataSetChanged();
             }
