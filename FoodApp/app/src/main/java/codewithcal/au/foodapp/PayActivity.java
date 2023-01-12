@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ public class PayActivity extends AppCompatActivity {
     TextView itemId, tvTotalPrice;
     String idUser;
     Button btnOrder;
+    private ImageView btnBack;
     ApiInterface apiInterface;
     private RecyclerView rcvPay;
     private ArrayList<DetailBill> arrayList;
@@ -91,7 +93,12 @@ public class PayActivity extends AppCompatActivity {
                 postBills();
             }
         });
-
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickBack();
+            }
+        });
         ArrayList<String> list = db.getTotalPrice();
         ArrayList<Integer> numbers = new ArrayList<Integer>();
         if(list.isEmpty() || list == null || list.get(0) == null){
@@ -114,6 +121,7 @@ public class PayActivity extends AppCompatActivity {
         itemId = findViewById(R.id.tv_user_info_pay);
         btnOrder = findViewById(R.id.btn_order);
         tvTotalPrice = findViewById(R.id.tv_total_price_pay);
+        btnBack = findViewById(R.id.icon_back);
     }
 
     private void getAllBills() {
@@ -148,5 +156,10 @@ public class PayActivity extends AppCompatActivity {
 //        Intent intent = new Intent(PayActivity.this, PageActivity.class);
 //        startActivity(intent);
         finish();
+    }
+
+    private void clickBack() {
+        Intent intent = new Intent(PayActivity.this, PageActivity.class);
+        startActivity(intent);
     }
 }
