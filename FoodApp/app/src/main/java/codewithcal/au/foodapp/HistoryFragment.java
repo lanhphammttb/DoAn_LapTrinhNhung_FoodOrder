@@ -41,9 +41,9 @@ public class HistoryFragment extends Fragment {
     List<Bill> billList;
     List<Bill> billListInverse;
     List<Food> foodList;
-    String id;
+    int id;
 
-    public static HistoryFragment getInstance(String id) {
+    public static HistoryFragment getInstance(int id) {
         HistoryFragment historyFragment = new HistoryFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("user_id", id);
@@ -80,7 +80,7 @@ public class HistoryFragment extends Fragment {
         foodList = new ArrayList<>();
         getAllFood();
         if (getArguments() != null) {
-            this.id = getArguments().getString("user_id");
+            this.id = getArguments().getInt("user_id");
         }
         BillAdapter idAdapter;
         idAdapter = new BillAdapter(id);
@@ -92,6 +92,13 @@ public class HistoryFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Bill>> call, Response<List<Bill>> response) {
                 billList = response.body();
+                List<Bill> filteredList = new ArrayList<>();
+                for (Bill row : billList) {
+                    if (row.getAccountId() == id) {
+                        filteredList.add(row);
+                    }
+                }
+                billList = filteredList;
                 billListInverse = new ArrayList<>();
                 for (int i = billList.size() - 1; i >= 0; i--) {
 

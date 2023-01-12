@@ -30,7 +30,7 @@ import retrofit2.Response;
 public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewHolder> {
     Context context;
     List<Bill> allmenuList;
-    String id;
+    int id;
     List<Food> foodList;
 
     public BillAdapter(Context context, List<Bill> allmenuList, List<Food> foodList) {
@@ -39,7 +39,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewHolder
         this.foodList = foodList;
     }
 
-    public BillAdapter(String id) {
+    public BillAdapter(int id) {
         this.id = id;
     }
 
