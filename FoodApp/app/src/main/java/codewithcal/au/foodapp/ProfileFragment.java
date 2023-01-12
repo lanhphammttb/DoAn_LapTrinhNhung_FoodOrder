@@ -24,8 +24,7 @@ public class ProfileFragment extends Fragment {
     private DatabaseHandler db;
     private User user;
     private TextView tvUserName, tvEmail, btnChangeInfo;
-    private CardView cardLogout;
-    private ImageView btnChangePass;
+    private CardView cardLogout, btnChangePass;
 
     public static ProfileFragment getInstance(User user) {
         ProfileFragment profileFragment = new ProfileFragment();
@@ -94,7 +93,7 @@ public class ProfileFragment extends Fragment {
         tvEmail = view.findViewById(R.id.text_email);
         cardLogout = view.findViewById(R.id.card_logout);
         btnChangeInfo = view.findViewById(R.id.btn_change_info);
-        btnChangePass = view.findViewById(R.id.image_change_pass);
+        btnChangePass = view.findViewById(R.id.card_change_pass);
     }
 
 }
