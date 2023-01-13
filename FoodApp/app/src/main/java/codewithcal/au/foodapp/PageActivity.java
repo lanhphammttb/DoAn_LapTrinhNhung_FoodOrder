@@ -103,4 +103,13 @@ public class PageActivity extends AppCompatActivity {
         }
         return count;
     }
+
+    @Override
+    protected void onStart() {
+        BadgeDrawable badgeDrawable = bottomNavigationView.getOrCreateBadge(R.id.item_cart);
+        badgeDrawable.setVisible(true);
+        int count = getCountFoodInCart();
+        badgeDrawable.setNumber(count);
+        super.onStart();
+    }
 }

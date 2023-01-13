@@ -1,5 +1,7 @@
 package codewithcal.au.foodapp;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -37,6 +41,7 @@ public class CartFragment extends Fragment {
     private String id;
     private Toolbar toolbar;
     private TextView tvTotalPrice;
+
     public static CartFragment getInstance(String id) {
         CartFragment cartFragment = new CartFragment();
         Bundle bundle = new Bundle();
@@ -112,19 +117,25 @@ public class CartFragment extends Fragment {
 
         ArrayList<String> list = db.getTotalPrice();
         ArrayList<Integer> numbers = new ArrayList<Integer>();
-        if(list.isEmpty() || list == null || list.get(0) == null){
+        if (list.isEmpty() || list == null || list.get(0) == null) {
             tvTotalPrice.setText("Total price: 0 VNĐ");
-        }
-        else if (list.size() >= 1){
-            for(int i = 0; i < list.size(); i++) {
+        } else if (list.size() >= 1) {
+            for (int i = 0; i < list.size(); i++) {
                 numbers.add(Integer.parseInt(list.get(i)));
             }
             int sum = 0;
-            for(int i = 0; i < numbers.size(); i++) {
+            for (int i = 0; i < numbers.size(); i++) {
                 sum += numbers.get(i);
             }
             tvTotalPrice.setText("Total price: " + String.valueOf(sum) + " VNĐ");
         }
+
+        if(db.getDetailBillCount()==0){
+            tvTotalPrice.setText("Total price: 0 VNĐ");
+            arrayList.clear();
+            detailBillAdapter.notifyDataSetChanged();
+        }
+
     }
 
     private void getAllBills() {
@@ -140,5 +151,35 @@ public class CartFragment extends Fragment {
         Intent it = new Intent(getContext(), PayActivity.class);
         it.putExtra("id", id);
         startActivity(it);
+    }
+
+    @Override
+    public void onStart() {
+        if(db.getDetailBillCount()==0){
+            tvTotalPrice.setText("Total price: 0 VNĐ");
+            arrayList.clear();
+            detailBillAdapter.notifyDataSetChanged();
+        }
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        if(db.getDetailBillCount()==0){
+            tvTotalPrice.setText("Total price: 0 VNĐ");
+            arrayList.clear();
+            detailBillAdapter.notifyDataSetChanged();
+        }
+        super.onStop();
+    }
+
+    @Override
+    public void onPause() {
+        if(db.getDetailBillCount()==0){
+            tvTotalPrice.setText("Total price: 0 VNĐ");
+            arrayList.clear();
+            detailBillAdapter.notifyDataSetChanged();
+        }
+        super.onPause();
     }
 }

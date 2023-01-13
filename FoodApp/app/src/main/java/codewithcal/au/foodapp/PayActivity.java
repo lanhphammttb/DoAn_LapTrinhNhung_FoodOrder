@@ -144,6 +144,7 @@ public class PayActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Bill> call, Response<Bill> response) {
                     Toast.makeText(PayActivity.this, "Order " + detailBill.getName() + " success", Toast.LENGTH_SHORT).show();
+                    db.deleteDetailBill(id);
                     db.dropTableDetailBill();
                 }
 
@@ -153,13 +154,11 @@ public class PayActivity extends AppCompatActivity {
                 }
             });
         }
-//        Intent intent = new Intent(PayActivity.this, PageActivity.class);
-//        startActivity(intent);
+        payDetailBillAdapter.notifyDataSetChanged();
         finish();
     }
 
     private void clickBack() {
-        Intent intent = new Intent(PayActivity.this, PageActivity.class);
-        finish();;
+        finish();
     }
 }
